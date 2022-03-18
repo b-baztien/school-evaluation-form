@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "evaluation-form": "apps/evaluation-form",
+    "evaluation-form-e2e": "apps/evaluation-form-e2e"
+  }
+}

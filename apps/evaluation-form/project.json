@@ -1,0 +1,97 @@
+{
+  "projectType": "application",
+  "root": "apps/evaluation-form",
+  "sourceRoot": "apps/evaluation-form/src",
+  "prefix": "school-evaluation-form",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/evaluation-form",
+        "index": "apps/evaluation-form/src/index.html",
+        "main": "apps/evaluation-form/src/main.ts",
+        "polyfills": "apps/evaluation-form/src/polyfills.ts",
+        "tsConfig": "apps/evaluation-form/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/evaluation-form/src/favicon.ico",
+          "apps/evaluation-form/src/assets"
+        ],
+        "styles": ["apps/evaluation-form/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/evaluation-form/src/environments/environment.ts",
+              "with": "apps/evaluation-form/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "evaluation-form:build:production"
+        },
+        "development": {
+          "browserTarget": "evaluation-form:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/evaluation-form/proxy.conf.json"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "evaluation-form:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/evaluation-form/src/**/*.ts",
+          "apps/evaluation-form/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/evaluation-form"],
+      "options": {
+        "jestConfig": "apps/evaluation-form/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
