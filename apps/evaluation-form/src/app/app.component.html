@@ -1,9 +1,21 @@
-<div style="text-align: center">
-  <h1>Welcome to evaluation-form!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Fast and Extensible Build System"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<tui-scrollbar>
+  <tui-root>
+    <router-outlet></router-outlet>
+
+    <ng-container ngProjectAs="tuiOverContent">
+      <!-- Content over app content -->
+    </ng-container>
+    <ng-container ngProjectAs="tuiOverDialogs">
+      <!-- Content over dialogs -->
+    </ng-container>
+    <ng-container ngProjectAs="tuiOverNotifications">
+      <!-- Content over notifications -->
+    </ng-container>
+    <ng-container ngProjectAs="tuiOverPortals">
+      <!-- Content over dropdowns -->
+    </ng-container>
+    <ng-container ngProjectAs="tuiOverHints">
+      <!-- Content over hints -->
+    </ng-container>
+  </tui-root>
+</tui-scrollbar>

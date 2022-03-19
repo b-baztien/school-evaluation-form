@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+/* sarabun-regular - latin */
+@font-face {
+  font-family: 'Sarabun';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../src/assets/fonts/sarabun-v12-latin-regular.woff2') format('woff2'),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url('../src/assets/fonts/sarabun-v12-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
