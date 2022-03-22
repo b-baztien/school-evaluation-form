@@ -10,10 +10,13 @@ import {
 } from '@taiga-ui/core';
 import {
   TuiAccordionModule,
+  TuiFieldErrorModule,
+  TuiFilterByInputPipeModule,
   TuiInputModule,
   TuiInputPasswordModule,
   TuiIslandModule,
 } from '@taiga-ui/kit';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [],
@@ -30,6 +33,9 @@ import {
     TuiInputModule,
     TuiInputPasswordModule,
     TuiButtonModule,
+    TuiFieldErrorModule,
+    TuiFilterByInputPipeModule,
+    NgxSpinnerModule,
   ],
 })
 export class SharedModule {}

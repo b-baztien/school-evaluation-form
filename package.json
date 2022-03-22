@@ -34,6 +34,7 @@
     "@taiga-ui/kit": "^2.37.1",
     "@tinkoff/ng-dompurify": "3.0.0",
     "dompurify": "2.2.9",
+    "ngx-spinner": "^13.1.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",

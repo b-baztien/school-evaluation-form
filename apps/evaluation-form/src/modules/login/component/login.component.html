@@ -1,4 +1,4 @@
-<div class="bg tui-container_fullwidth">
+<div class="tui-container_fullwidth bg">
   <div class="tui-row">
     <div
       style="margin-top: 30vh"
@@ -6,24 +6,33 @@
     >
       <tui-island size="l" textAlign="center">
         <h3>เข้าสู่ระบบ</h3>
-        <form>
+        <form [formGroup]="loginForm" (submit)="login()">
           <tui-input
-            formControlName="testValue"
+            formControlName="username"
             class="input"
             [tuiTextfieldLabelOutside]="true"
           >
             ชื่อผู้ใช้งาน
           </tui-input>
+          <tui-field-error
+            formControlName="username"
+            [error]="[] | tuiFieldError | async"
+          ></tui-field-error>
           <tui-input-password
+            formControlName="password"
             class="input tui-space_top-5"
             [tuiTextfieldLabelOutside]="true"
+            [tuiTextfieldCleaner]="true"
           >
             รหัสผ่าน
           </tui-input-password>
-          <tui-field-error></tui-field-error>
+          <tui-field-error
+            formControlName="password"
+            [error]="[] | tuiFieldError | async"
+          ></tui-field-error>
           <button
             tuiButton
-            type="button"
+            type="submit"
             appearance="primary"
             class="tui-space_top-5"
           >

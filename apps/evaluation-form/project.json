@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/evaluation-form",
         "index": "apps/evaluation-form/src/index.html",
@@ -28,6 +26,7 @@
         "styles": [
           "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
+          "node_modules/ngx-spinner/animations/square-jelly-box.css",
           "apps/evaluation-form/src/styles.scss"
         ],
         "scripts": []
@@ -77,6 +76,7 @@
       },
       "defaultConfiguration": "development",
       "options": {
+        "browserTarget": "evaluation-form:build:development",
         "proxyConfig": "apps/evaluation-form/proxy.conf.json"
       }
     },
@@ -97,9 +97,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/evaluation-form"
-      ],
+      "outputs": ["coverage/apps/evaluation-form"],
       "options": {
         "jestConfig": "apps/evaluation-form/jest.config.js",
         "passWithNoTests": true
