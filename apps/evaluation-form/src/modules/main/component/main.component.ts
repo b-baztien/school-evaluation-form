@@ -5,6 +5,7 @@ import {
   TuiDialogSize,
 } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'school-evaluation-form-main',
@@ -23,10 +24,10 @@ export class MainComponent {
   ) {
     this.dialogService
       .open(content, {
-        label: 'What a cool library set',
         header,
         size,
       })
+      .pipe(tap({ complete: () => console.log('complete') }))
       .subscribe();
   }
 }
