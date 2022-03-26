@@ -17,7 +17,6 @@ export namespace CustomValidator {
 export namespace FormValidator {
   export const markAsTouched = (formGroup: FormGroup) => {
     for (const item of Object.keys(formGroup.controls)) {
-      console.log(item);
       formGroup.controls[item].markAsTouched();
     }
 
