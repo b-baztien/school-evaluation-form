@@ -15,6 +15,7 @@ import {
 } from '@taiga-ui/core';
 import {
   TuiAccordionModule,
+  TuiAvatarModule,
   TuiCheckboxLabeledModule,
   TuiDataListWrapperModule,
   TuiFieldErrorModule,
@@ -71,6 +72,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiInputTimeModule,
     TuiCheckboxLabeledModule,
     TuiRadioLabeledModule,
+    TuiAvatarModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },
