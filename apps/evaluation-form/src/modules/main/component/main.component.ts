@@ -21,7 +21,6 @@ export class MainComponent {
     header: PolymorpheusContent,
     size: TuiDialogSize
   ) {
-    console.log('goToForm');
     this.dialogService
       .open(content, {
         label: 'What a cool library set',
