@@ -1,5 +1,5 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ThemingService } from '../services/theming/theming.service';
 
 @Component({
