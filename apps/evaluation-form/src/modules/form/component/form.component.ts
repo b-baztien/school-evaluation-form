@@ -73,10 +73,14 @@ export class FormComponent {
   ];
 
   testForm = new FormGroup({
-    nameValue: new FormControl('', Validators.required),
-    textValue: new FormControl('', Validators.required),
-    passwordValue: new FormControl('', Validators.required),
-    phoneValue: new FormControl('', Validators.required),
+    schoolName: new FormControl('', Validators.required),
+    group: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    district: new FormControl('', Validators.required),
+    province: new FormControl(
+      { value: 'ลำปาง', disabled: true },
+      Validators.required
+    ),
     moneyValue: new FormControl('100', Validators.required),
     periodValue: new FormControl(new TuiDay(2017, 2, 15), Validators.required),
     timeValue: new FormControl(new TuiTime(12, 30), Validators.required),

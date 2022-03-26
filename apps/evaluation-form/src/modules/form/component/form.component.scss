@@ -3,6 +3,23 @@
 }
 
 .tui-container {
+  background-color: #fff;
+  height: 90vh;
   padding: 2rem;
-  background: white;
+}
+
+.tui-group__auto-width-item {
+  min-width: 10rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.font-nomal {
+  font-weight: normal;
+}
+
+tui-radio-labeled {
+  align-self: center;
 }

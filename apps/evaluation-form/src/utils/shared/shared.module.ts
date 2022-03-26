@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TUI_DATE_FORMAT, TUI_DATE_SEPARATOR } from '@taiga-ui/cdk';
 import {
   TuiButtonModule,
   TuiDataListModule,
@@ -28,6 +29,7 @@ import {
   TuiInputTimeModule,
   TuiIslandModule,
   TuiRadioBlockModule,
+  TuiRadioLabeledModule,
   TuiRadioModule,
   TuiSelectModule,
   TuiStepperModule,
@@ -68,6 +70,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiInputDateTimeModule,
     TuiInputTimeModule,
     TuiCheckboxLabeledModule,
+    TuiRadioLabeledModule,
+  ],
+  providers: [
+    { provide: TUI_DATE_FORMAT, useValue: 'DMY' },
+    { provide: TUI_DATE_SEPARATOR, useValue: '/' },
   ],
 })
 export class SharedModule {}
