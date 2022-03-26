@@ -14,6 +14,20 @@ tui-svg {
   background: #ffdd2d;
 }
 
+.bodycontent {
+  text-align: left;
+  display: flex;
+    row-gap: 0.5rem;
+    flex-direction: column;
+    text-indent: 2rem;
+    p{
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+    }
+}
+
 .tui-row {
   column-gap: 2rem;
 }
+
+
