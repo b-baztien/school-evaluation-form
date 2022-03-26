@@ -37,7 +37,10 @@ export class MainComponent implements OnDestroy {
         size,
       })
       .pipe(
-        tap({ next: () => this.router.navigate(['/form']) }),
+        tap({
+          next: () => this.router.navigate(['/form']),
+          complete: () => console.log('complete'),
+        }),
         takeUntil(this.destroy$)
       )
       .subscribe();

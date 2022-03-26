@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiButtonModule,
+  TuiDataListModule,
   TuiDialogModule,
+  TuiGroupModule,
+  TuiLabelModule,
   TuiModeModule,
   TuiNotificationsModule,
   TuiRootModule,
@@ -11,11 +14,23 @@ import {
 } from '@taiga-ui/core';
 import {
   TuiAccordionModule,
+  TuiCheckboxLabeledModule,
+  TuiDataListWrapperModule,
   TuiFieldErrorModule,
   TuiFilterByInputPipeModule,
+  TuiInputDateModule,
+  TuiInputDateTimeModule,
   TuiInputModule,
+  TuiInputNumberModule,
   TuiInputPasswordModule,
+  TuiInputPhoneModule,
+  TuiInputSliderModule,
+  TuiInputTimeModule,
   TuiIslandModule,
+  TuiRadioBlockModule,
+  TuiRadioModule,
+  TuiSelectModule,
+  TuiStepperModule,
 } from '@taiga-ui/kit';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -38,6 +53,21 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiFilterByInputPipeModule,
     NgxSpinnerModule,
     TuiSvgModule,
+    TuiStepperModule,
+    TuiInputNumberModule,
+    TuiInputSliderModule,
+    TuiDataListModule,
+    TuiDataListWrapperModule,
+    TuiSelectModule,
+    TuiGroupModule,
+    TuiLabelModule,
+    TuiInputDateModule,
+    TuiInputPhoneModule,
+    TuiRadioModule,
+    TuiRadioBlockModule,
+    TuiInputDateTimeModule,
+    TuiInputTimeModule,
+    TuiCheckboxLabeledModule,
   ],
 })
 export class SharedModule {}

@@ -7,8 +7,10 @@
   ><p style="color: white">กำลังโหลด...</p></ngx-spinner
 >
 
+<tui-theme-night></tui-theme-night>
+
 <tui-scrollbar>
-  <tui-root>
+  <tui-root [tuiMode]="themingService.theme | async">
     <router-outlet></router-outlet>
 
     <ng-container ngProjectAs="tuiOverContent">
