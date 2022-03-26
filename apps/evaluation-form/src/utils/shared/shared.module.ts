@@ -6,6 +6,7 @@ import {
   TuiModeModule,
   TuiNotificationsModule,
   TuiRootModule,
+  TuiSvgModule,
   TuiThemeNightModule,
 } from '@taiga-ui/core';
 import {
@@ -36,6 +37,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiFieldErrorModule,
     TuiFilterByInputPipeModule,
     NgxSpinnerModule,
+    TuiSvgModule,
   ],
 })
 export class SharedModule {}
