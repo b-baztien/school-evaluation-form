@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { AbstractControl, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 
 export namespace CustomValidator {
   export const required = (option: { text?: string } = {}) => {
@@ -11,5 +11,16 @@ export namespace CustomValidator {
         : {
             other: text ? `กรุณากรอก ${text}` : 'กรุณากรอกฟิลด์นี้',
           };
+  };
+}
+
+export namespace FormValidator {
+  export const markAsTouched = (formGroup: FormGroup) => {
+    for (const item of Object.keys(formGroup.controls)) {
+      console.log(item);
+      formGroup.controls[item].markAsTouched();
+    }
+
+    return;
   };
 }
