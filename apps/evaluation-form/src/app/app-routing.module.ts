@@ -18,6 +18,11 @@ const routes: Routes = [
       import('../modules/main/main.module').then((m) => m.MainModule),
   },
   {
+    path: 'form',
+    loadChildren: () =>
+      import('../modules/form/form.module').then((m) => m.FormModule),
+  },
+  {
     path: '**',
     redirectTo: '/',
   },

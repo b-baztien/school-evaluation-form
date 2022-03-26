@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   TuiDialogContext,
   TuiDialogService,
@@ -14,7 +15,8 @@ import { tap } from 'rxjs';
 })
 export class MainComponent {
   constructor(
-    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    private router: Router
   ) {}
 
   goToForm(
@@ -27,7 +29,7 @@ export class MainComponent {
         header,
         size,
       })
-      .pipe(tap({ complete: () => console.log('complete') }))
+      .pipe(tap({ complete: () => this.router.navigate(['/form']) }))
       .subscribe();
   }
 }
