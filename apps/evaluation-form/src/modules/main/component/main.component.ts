@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   TuiDialogContext,
@@ -6,18 +6,25 @@ import {
   TuiDialogSize,
 } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'school-evaluation-form-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent {
+export class MainComponent implements OnDestroy {
+  destroy$ = new Subject<void>();
+
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private router: Router
   ) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   goToForm(
     content: PolymorpheusContent<TuiDialogContext>,
@@ -29,7 +36,10 @@ export class MainComponent {
         header,
         size,
       })
-      .pipe(tap({ complete: () => this.router.navigate(['/form']) }))
+      .pipe(
+        tap({ next: () => this.router.navigate(['/form']) }),
+        takeUntil(this.destroy$)
+      )
       .subscribe();
   }
 }

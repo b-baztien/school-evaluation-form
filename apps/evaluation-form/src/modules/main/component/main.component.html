@@ -35,7 +35,9 @@
 <ng-template #content let-observer>
   Take a look
   <div class="buttons">
-    <button tuiButton size="m" (click)="observer.complete()">Very cool!</button>
+    <button tuiButton size="m" (click)="observer.next('form1')">
+      Very cool!
+    </button>
   </div>
 </ng-template>
 

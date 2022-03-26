@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { tap, timer } from 'rxjs';
+import { Subject, takeUntil, tap, timer } from 'rxjs';
 import { CustomValidator } from '../../../utils/validatates/form-validatate';
 
 @Component({
@@ -10,7 +10,7 @@ import { CustomValidator } from '../../../utils/validatates/form-validatate';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginForm = new FormGroup({
     username: new FormControl('', [
       CustomValidator.required({ text: 'ชื่อผู้ใช้งาน' }),
@@ -20,7 +20,14 @@ export class LoginComponent {
     ]),
   });
 
+  destroy$ = new Subject<void>();
+
   constructor(private router: Router, private spinner: NgxSpinnerService) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   login() {
     if (this.loginForm.invalid) return;
@@ -30,7 +37,8 @@ export class LoginComponent {
         tap({
           subscribe: () => this.spinner.show(),
           complete: () => this.spinner.hide(),
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => this.router.navigate(['/main']));
   }
