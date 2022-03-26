@@ -3,7 +3,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil, tap, timer } from 'rxjs';
-import { CustomValidator } from '../../../utils/validatates/form-validatate';
+import {
+  CustomValidator,
+  FormValidator,
+} from '../../../utils/validatates/form-validatate';
 
 @Component({
   selector: 'school-evaluation-form-login',
@@ -30,6 +33,8 @@ export class LoginComponent implements OnDestroy {
   }
 
   login() {
+    FormValidator.markAsTouched(this.loginForm);
+
     if (this.loginForm.invalid) return;
 
     timer(3000)
