@@ -7,10 +7,12 @@
   ><p style="color: white">กำลังโหลด...</p></ngx-spinner
 >
 
-<tui-theme-night></tui-theme-night>
+<tui-theme-night
+  *ngIf="(themingService.theme | async) === 'onDark'"
+></tui-theme-night>
 
 <tui-scrollbar>
-  <tui-root [tuiMode]="themingService.theme | async">
+  <tui-root>
     <router-outlet></router-outlet>
 
     <ng-container ngProjectAs="tuiOverContent">
