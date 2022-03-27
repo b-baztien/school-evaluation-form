@@ -8,6 +8,7 @@ import { FormService } from '../../../services/form/form.service';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnDestroy {
+  formStepIndex = 0;
   formId!: string;
 
   listFormStep = [
@@ -19,7 +20,7 @@ export class FormComponent implements OnDestroy {
 
   destroy$ = new Subject<void>();
 
-  constructor(public formService: FormService) {
+  constructor(private formService: FormService) {
     this.formId = localStorage.getItem('formId') ?? '';
 
     merge(
@@ -29,11 +30,8 @@ export class FormComponent implements OnDestroy {
       .pipe(
         tap({
           next: (value) => {
-            if (
-              this.formService.formStepIndex + value !==
-              this.listFormStep.length
-            )
-              this.formService.formStepIndex += value;
+            if (this.formStepIndex + value !== this.listFormStep.length)
+              this.formStepIndex += value;
           },
         }),
         takeUntil(this.destroy$)

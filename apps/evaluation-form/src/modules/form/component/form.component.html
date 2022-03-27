@@ -1,10 +1,10 @@
 <div class="tui-container">
   <div class="stepper">
-    <tui-stepper [activeItemIndex]="formService.formStepIndex">
+    <tui-stepper [activeItemIndex]="formStepIndex">
       <button
         tuiStep
         *ngFor="let item of listFormStep; let i = index"
-        [disabled]="formService.formStepIndex !== i"
+        [disabled]="formStepIndex !== i"
       >
         {{ item }}
       </button>
@@ -12,15 +12,15 @@
   </div>
 
   <school-evaluation-form-user-form
-    *ngIf="formService.formStepIndex === 0"
+    *ngIf="formStepIndex === 0"
   ></school-evaluation-form-user-form>
 
   <school-evaluation-form-form1
-    *ngIf="formService.formStepIndex === 1 && formId === '1'"
+    *ngIf="formStepIndex === 1 && formId === '1'"
   ></school-evaluation-form-form1>
 
   <school-evaluation-form-form2
-    *ngIf="formService.formStepIndex === 1 && formId === '2'"
+    *ngIf="formStepIndex === 1 && formId === '2'"
   ></school-evaluation-form-form2>
 
   <div class="tui-row tui-row_adaptive tui-space_top-10">
@@ -30,7 +30,7 @@
         type="button"
         appearance="primary"
         icon="tuiIconChevronLeftLarge"
-        [disabled]="formService.formStepIndex === 0"
+        [disabled]="formStepIndex === 0"
         (click)="prevForm()"
       >
         ย้อนกลับ
@@ -38,19 +38,14 @@
     </div>
     <div class="tui-col_lg-6 align-end">
       <ng-container
-        *ngIf="
-          formService.formStepIndex !== listFormStep.length - 1;
-          else elseTemplate
-        "
+        *ngIf="formStepIndex !== listFormStep.length - 1; else elseTemplate"
       >
         <button
           tuiButton
           type="button"
           appearance="primary"
           iconRight="tuiIconChevronRightLarge"
-          [disabled]="
-            formService.formStepIndex === this.listFormStep.length - 1
-          "
+          [disabled]="formStepIndex === this.listFormStep.length - 1"
           (click)="nextForm()"
         >
           ถัดไป
