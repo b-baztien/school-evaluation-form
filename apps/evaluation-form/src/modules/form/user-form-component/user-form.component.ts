@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
+import { FormService } from '../../../services/form/form.service';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { FormUser } from '../../../interfaces/form-user.interface';
 import { ConfigurationForm } from '../../../utils/configulation-form';

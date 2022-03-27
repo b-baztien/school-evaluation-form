@@ -36,6 +36,7 @@ import {
   TuiStepperModule,
 } from '@taiga-ui/kit';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TuiTableModule } from '@taiga-ui/addon-table';
 
 @NgModule({
   declarations: [],
@@ -73,6 +74,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiCheckboxLabeledModule,
     TuiRadioLabeledModule,
     TuiAvatarModule,
+    TuiTableModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },
