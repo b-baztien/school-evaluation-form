@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { mapTo, merge, Subject, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
 
@@ -20,11 +19,8 @@ export class FormComponent implements OnDestroy {
 
   destroy$ = new Subject<void>();
 
-  constructor(
-    private activateRoute: ActivatedRoute,
-    public formService: FormService
-  ) {
-    this.formId = this.activateRoute.snapshot.paramMap.get('university') ?? '';
+  constructor(public formService: FormService) {
+    this.formId = localStorage.getItem('formId') ?? '';
 
     merge(
       this.formService.decreaseFormStepIndex$.pipe(mapTo(-1)),

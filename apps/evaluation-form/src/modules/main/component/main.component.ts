@@ -40,8 +40,9 @@ export class MainComponent implements OnDestroy {
       .pipe(
         tap({
           next: () => {
-            this.router.navigate(['/form', { formId: formId }]),
-              this.ngOnDestroy();
+            this.router.navigate(['/form']);
+            localStorage.setItem('formId', formId);
+            this.ngOnDestroy();
           },
         }),
         takeUntil(this.destroy$)
