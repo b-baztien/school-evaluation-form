@@ -26,12 +26,17 @@ tui-svg.icon-xl {
   font-size: 2rem;
 }
 
-.align-center {
-  text-align: center;
+.align-center,
+th {
+  text-align: center !important;
 }
 
 .align-end {
-  text-align: end;
+  text-align: end !important;
+}
+
+.align-start {
+  text-align: start !important;
 }
 
 tui-wrapper[data-appearance='success'] {
@@ -90,4 +95,8 @@ tui-wrapper[data-appearance='danger'] {
 tui-radio-labeled,
 .self-center {
   align-self: center;
+}
+
+table {
+  width: 100%;
 }

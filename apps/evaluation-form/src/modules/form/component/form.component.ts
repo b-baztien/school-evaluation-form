@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { mapTo, merge, Subject, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
 
@@ -6,6 +6,7 @@ import { FormService } from '../../../services/form/form.service';
   selector: 'school-evaluation-form-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormComponent implements OnDestroy {
   formStepIndex = 0;
@@ -30,7 +31,10 @@ export class FormComponent implements OnDestroy {
       .pipe(
         tap({
           next: (value) => {
-            if (this.formStepIndex + value !== this.listFormStep.length)
+            if (
+              this.formStepIndex + value !== this.listFormStep.length &&
+              this.formStepIndex + value > 0
+            )
               this.formStepIndex += value;
           },
         }),
