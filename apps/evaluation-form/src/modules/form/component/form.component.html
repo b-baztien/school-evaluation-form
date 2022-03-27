@@ -1,10 +1,13 @@
 <div class="tui-container">
   <div class="stepper">
-    <tui-stepper [activeItemIndex]="0">
-      <button tuiStep>First step</button>
-      <button tuiStep [disabled]="true">Second step</button>
-      <button tuiStep [disabled]="true">Third step</button>
-      <button tuiStep [disabled]="true">Fourth step</button>
+    <tui-stepper [activeItemIndex]="formStepIndex">
+      <button
+        tuiStep
+        *ngFor="let item of listFormStep; let i = index"
+        [disabled]="formStepIndex !== i"
+      >
+        {{ item }}
+      </button>
     </tui-stepper>
   </div>
   <form [formGroup]="formGroup">
@@ -34,7 +37,7 @@
         </div>
 
         <div class="tui-form__row">
-          <div tuiGroup [collapsed]="true">
+          <div tuiGroup>
             <div>
               <tui-input
                 formControlName="address"
@@ -78,7 +81,7 @@
         </div>
 
         <div class="tui-form__row">
-          <div tuiGroup [collapsed]="true">
+          <div tuiGroup>
             <div>
               <tui-input
                 formControlName="managerName"
@@ -95,6 +98,7 @@
             <div>
               <tui-input
                 formControlName="startPostionYear"
+                schoolEvaluationFormInputNumber
                 class="tui-group__inherit-item"
               >
                 ดำรงตำแหน่งตั้งแต่ปี
@@ -108,6 +112,9 @@
             <div>
               <tui-input
                 formControlName="managerPhone"
+                schoolEvaluationFormInputNumber
+                tuiTextfieldType="tel"
+                tuiTextfieldInputMode="numeric"
                 class="tui-group__inherit-item"
               >
                 เบอร์โทร
@@ -122,7 +129,7 @@
         </div>
 
         <div class="tui-form__row">
-          <div tuiGroup [collapsed]="true">
+          <div tuiGroup>
             <div>
               <tui-input
                 formControlName="fullname"
@@ -139,6 +146,7 @@
             <div>
               <tui-input
                 formControlName="startYear"
+                schoolEvaluationFormInputNumber
                 class="tui-group__inherit-item"
               >
                 ตั้งแต่ปี
@@ -152,6 +160,9 @@
             <div>
               <tui-input
                 formControlName="phone"
+                schoolEvaluationFormInputNumber
+                tuiTextfieldType="tel"
+                tuiTextfieldInputMode="numeric"
                 class="tui-group__inherit-item"
               >
                 เบอร์โทร
@@ -194,7 +205,7 @@
           </tui-radio-labeled>
 
           <div class="tui-form__multi-field">
-            <tui-input-date formControlName="date">
+            <tui-input-date toNativeDate formControlName="date">
               วัน/เดือน/ปี
               <span class="tui-required"></span>
             </tui-input-date>
@@ -204,16 +215,44 @@
             ></tui-field-error>
           </div>
         </div>
-
-        <button
-          tuiButton
-          type="button"
-          appearance="primary"
-          (click)="nextForm()"
-        >
-          ถัดไป
-        </button>
       </div>
     </div>
   </form>
+  <div class="tui-row tui-row_adaptive tui-space_top-10">
+    <div class="tui-col_lg-4">
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+        icon="tuiIconChevronLeftLarge"
+        [disabled]="formStepIndex === 0"
+        (click)="prevForm()"
+      >
+        ย้อนกลับ
+      </button>
+    </div>
+    <div class="tui-col_lg-4 align-center">
+      <button
+        tuiButton
+        type="button"
+        appearance="success"
+        iconRight="tuiIconCheckLarge"
+        (click)="nextForm()"
+      >
+        บันทึก
+      </button>
+    </div>
+    <div class="tui-col_lg-4 align-end">
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+        iconRight="tuiIconChevronRightLarge"
+        [disabled]="formStepIndex === this.listFormStep.length - 1"
+        (click)="nextForm()"
+      >
+        ถัดไป
+      </button>
+    </div>
+  </div>
 </div>

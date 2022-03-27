@@ -25,3 +25,56 @@ tui-svg.icon-xl {
 
   font-size: 2rem;
 }
+
+.align-center {
+  text-align: center;
+}
+
+.align-end {
+  text-align: end;
+}
+
+tui-wrapper[data-appearance='success'] {
+  background: #28a745;
+
+  &[data-state='hovered'] {
+    background: #218838;
+  }
+
+  &[data-state='pressed'] {
+    background: #1e7e34;
+  }
+}
+
+tui-wrapper[data-appearance='warning'] {
+  background: #ffc107;
+
+  &[data-state='hovered'] {
+    background: #e0a800;
+  }
+
+  &[data-state='pressed'] {
+    background: #d39e00;
+  }
+}
+
+tui-wrapper[data-appearance='danger'] {
+  background: #dc3545;
+
+  &[data-state='hovered'] {
+    background: #c82333;
+  }
+
+  &[data-state='pressed'] {
+    background: #bd2130;
+  }
+}
+
+tui-wrapper[data-appearance='success'],
+tui-wrapper[data-appearance='warning'],
+tui-wrapper[data-appearance='danger'] {
+  color: #fff;
+  &[data-state='disabled'] {
+    opacity: 0.65;
+  }
+}
