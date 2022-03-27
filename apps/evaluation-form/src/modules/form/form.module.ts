@@ -5,10 +5,11 @@ import { InputNumberDirective } from '../../directives/input-number/input-number
 import { SharedModule } from '../../utils/shared/shared.module';
 import { FormComponent } from './component/form.component';
 import { FormRoutingModule } from './form-routing.module';
+import { UserFormComponent } from './user-form-component/user-form.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [FormComponent, InputNumberDirective],
+  declarations: [FormComponent, InputNumberDirective, UserFormComponent],
   imports: [
     CommonModule,
     TuiFieldErrorPipeModule,

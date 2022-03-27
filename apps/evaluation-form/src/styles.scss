@@ -78,3 +78,16 @@ tui-wrapper[data-appearance='danger'] {
     opacity: 0.65;
   }
 }
+
+.tui-group__auto-width-item {
+  min-width: 10rem !important;
+}
+
+.font-nomal {
+  font-weight: normal;
+}
+
+tui-radio-labeled,
+.self-center {
+  align-self: center;
+}

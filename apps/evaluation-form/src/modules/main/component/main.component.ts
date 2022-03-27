@@ -27,6 +27,7 @@ export class MainComponent implements OnDestroy {
   }
 
   goToForm(
+    formId: string,
     content: PolymorpheusContent<TuiDialogContext>,
     header: PolymorpheusContent,
     size: TuiDialogSize
@@ -39,7 +40,8 @@ export class MainComponent implements OnDestroy {
       .pipe(
         tap({
           next: () => {
-            this.router.navigate(['/form']), this.ngOnDestroy();
+            this.router.navigate(['/form', { formId: formId }]),
+              this.ngOnDestroy();
           },
         }),
         takeUntil(this.destroy$)

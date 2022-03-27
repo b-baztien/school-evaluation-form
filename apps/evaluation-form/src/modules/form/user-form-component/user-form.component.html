@@ -1,0 +1,208 @@
+<form [formGroup]="formGroup">
+  <div class="tui-row tui-row_sme">
+    <div class="tui-col_12">
+      <div class="tui-form__row tui-form__row_multi-fields">
+        <div class="tui-form__multi-field">
+          <tui-input formControlName="schoolName">
+            โรงเรียน
+            <span class="tui-required"></span>
+          </tui-input>
+          <tui-field-error
+            formControlName="schoolName"
+            [error]="[] | tuiFieldError | async"
+          ></tui-field-error>
+        </div>
+        <div class="tui-form__multi-field">
+          <tui-input formControlName="group">
+            กลุ่มเครือข่าย
+            <span class="tui-required"></span>
+          </tui-input>
+          <tui-field-error
+            formControlName="group"
+            [error]="[] | tuiFieldError | async"
+          ></tui-field-error>
+        </div>
+      </div>
+
+      <div class="tui-form__row">
+        <div tuiGroup>
+          <div>
+            <tui-input
+              formControlName="address"
+              class="tui-group__inherit-item"
+            >
+              ที่อยู่
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="address"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div class="tui-group__auto-width-item">
+            <tui-input
+              formControlName="district"
+              class="tui-group__inherit-item"
+            >
+              อำเภอ
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="district"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div class="tui-group__auto-width-item">
+            <tui-input
+              formControlName="province"
+              class="tui-group__inherit-item"
+            >
+              จังหวัด
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="province"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="tui-form__row">
+        <div tuiGroup>
+          <div>
+            <tui-input
+              formControlName="managerName"
+              class="tui-group__inherit-item"
+            >
+              ชื่อ-สกุล ผู้บริหารสถานศึกษา
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="managerName"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div>
+            <tui-input
+              formControlName="startPostionYear"
+              schoolEvaluationFormInputNumber
+              class="tui-group__inherit-item"
+            >
+              ดำรงตำแหน่งตั้งแต่ปี
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="startPostionYear"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div>
+            <tui-input
+              formControlName="managerPhone"
+              schoolEvaluationFormInputNumber
+              tuiTextfieldType="tel"
+              tuiTextfieldInputMode="numeric"
+              class="tui-group__inherit-item"
+            >
+              เบอร์โทร
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="managerPhone"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="tui-form__row">
+        <div tuiGroup>
+          <div>
+            <tui-input
+              formControlName="fullname"
+              class="tui-group__inherit-item"
+            >
+              ชื่อ-สกุล ครูที่รับผิดชอบ
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="fullname"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div>
+            <tui-input
+              formControlName="startYear"
+              schoolEvaluationFormInputNumber
+              class="tui-group__inherit-item"
+            >
+              ตั้งแต่ปี
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="startYear"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+          <div>
+            <tui-input
+              formControlName="phone"
+              schoolEvaluationFormInputNumber
+              tuiTextfieldType="tel"
+              tuiTextfieldInputMode="numeric"
+              class="tui-group__inherit-item"
+            >
+              เบอร์โทร
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-field-error
+              formControlName="phone"
+              [error]="[] | tuiFieldError | async"
+            ></tui-field-error>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="align-center tui-space_vertical-7">
+        สำนักงานเขตพื้นที่การศึกษาประถมศึกษาลำปาง เขต 1
+      </h2>
+
+      <div class="tui-form__row tui-form__row_multi-fields">
+        <div class="tui-form__multi-field self-center">
+          <h3 class="font-nomal">ครั้งที่นิเทศ ติดตาม</h3>
+        </div>
+
+        <tui-radio-labeled
+          class="tui-group__auto-width-item"
+          contentAlign="left"
+          formControlName="time"
+          item="1"
+          size="l"
+        >
+          ครั้งที่ 1
+        </tui-radio-labeled>
+        <tui-radio-labeled
+          class="tui-group__auto-width-item"
+          contentAlign="left"
+          formControlName="time"
+          item="2"
+          size="l"
+        >
+          ครั้งที่ 2
+        </tui-radio-labeled>
+
+        <div class="tui-form__multi-field">
+          <tui-input-date toNativeDate formControlName="date">
+            วัน/เดือน/ปี
+            <span class="tui-required"></span>
+          </tui-input-date>
+          <tui-field-error
+            formControlName="date"
+            [error]="[] | tuiFieldError | async"
+          ></tui-field-error>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
