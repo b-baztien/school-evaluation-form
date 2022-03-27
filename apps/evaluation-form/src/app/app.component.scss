@@ -2,29 +2,26 @@ body {
   background-image: url('https://img.freepik.com/free-vector/flat-design-abstract-background_23-2149116123.jpg?t=st=1647936786~exp=1647937386~hmac=92219affed80cef98786ef7dd487db2439a37873d1a797c74a7675c98097db16&w=996');
 }
 
-nav{
-  background-color: #00A4E4;
-  width: 100%;
+nav {
+  background-color: #00a4e4;
+  width: 100vw;
 }
 
-.footer{
-  background-color: #FAFAFA;
+.footer {
+  background-color: #fafafa;
 }
 
-.div_logo{
+.div_logo {
   display: flex;
-    align-items: center;
+  align-items: center;
 }
 
-label.logo{
-color: #fff;
-font-weight: bold;
-font-size: 1.5rem;
+label.logo {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
-.dummy {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem 5rem;
-  width: 100%;
+tui-root {
+  min-height: calc(100vh - 11.4rem - 2.25rem);
 }
-
