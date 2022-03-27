@@ -1,8 +1,13 @@
 export interface TableData {
-  subject: string;
-  header: {
-    topic: string;
-    operation: string[];
+  tableHeader: string;
+  tableBody: {
+    tbodyHeading: string;
+    header: {
+      topic: string;
+      selectedOperation?: string;
+    }[];
   }[];
   evidence: string[];
+  selectedEvidence?: string[];
+  feedback?: string;
 }
