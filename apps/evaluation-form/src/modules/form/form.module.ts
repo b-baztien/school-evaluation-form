@@ -7,6 +7,7 @@ import { FormComponent } from './component/form.component';
 import { FormRoutingModule } from './form-routing.module';
 import { UserFormComponent } from './user-form-component/user-form.component';
 import { Form1Component } from './form1-component/form1.component';
+import { Form2Component } from './form2-component/form2.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -15,6 +16,7 @@ import { Form1Component } from './form1-component/form1.component';
     InputNumberDirective,
     UserFormComponent,
     Form1Component,
+    Form2Component,
   ],
   imports: [
     CommonModule,
