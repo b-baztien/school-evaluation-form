@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from '../../../services/form/form.service';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -13,6 +13,7 @@ import {
   selector: 'school-evaluation-form-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent implements OnDestroy {
   forms: ConfigurationForm<FormUser> = {
