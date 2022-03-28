@@ -25,3 +25,11 @@ label.logo {
 tui-root {
   min-height: calc(100vh - 11.4rem - 2.25rem);
 }
+
+:host ::ng-deep tui-root {
+  .tui-container:first-child {
+    background-color: #fff;
+    padding: 2rem;
+    min-height: 70vh;
+  }
+}

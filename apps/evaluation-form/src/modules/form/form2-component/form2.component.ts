@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TableData } from '../../../interfaces/table-data.interface';
 
 @Component({
   selector: 'school-evaluation-form-form2',
   templateUrl: './form2.component.html',
   styleUrls: ['./form2.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Form2Component {
   operationType = ['ดำเนินการแล้ว', 'อยู่ระหว่างดำเนินการ', 'ไม่ดำเนินการ'];
