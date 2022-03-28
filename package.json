@@ -23,6 +23,7 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@ngrx/store": "^13.0.2",
     "@nrwl/angular": "13.9.3",
     "@taiga-ui/addon-commerce": "^2.38.0",
     "@taiga-ui/addon-doc": "^2.38.0",

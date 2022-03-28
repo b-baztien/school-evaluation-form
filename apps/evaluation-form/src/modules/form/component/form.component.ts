@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { mapTo, merge, Subject, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
+import { Subject } from 'rxjs';
+import { RootStoreService } from '../../../services/root-store/root-store.service';
 
 @Component({
   selector: 'school-evaluation-form-form',
@@ -9,38 +10,15 @@ import { FormService } from '../../../services/form/form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormComponent implements OnDestroy {
-  formStepIndex = 0;
   formId!: string;
-
-  listFormStep = [
-    'ข้อมูลผู้ทำแบบประเมิน',
-    'Second step',
-    'Third step',
-    'Fourth step',
-  ];
 
   destroy$ = new Subject<void>();
 
-  constructor(private formService: FormService) {
+  constructor(
+    public rootStoreService: RootStoreService,
+    private formService: FormService
+  ) {
     this.formId = localStorage.getItem('formId') ?? '';
-
-    merge(
-      this.formService.decreaseFormStepIndex$.pipe(mapTo(-1)),
-      this.formService.increaseFormStepIndex$.pipe(mapTo(+1))
-    )
-      .pipe(
-        tap({
-          next: (value) => {
-            if (
-              this.formStepIndex + value !== this.listFormStep.length &&
-              this.formStepIndex + value > 0
-            )
-              this.formStepIndex += value;
-          },
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -49,10 +27,10 @@ export class FormComponent implements OnDestroy {
   }
 
   prevForm() {
-    this.formService.decreaseFormStepIndex$.next(null);
+    this.rootStoreService.backStep();
   }
 
   nextForm() {
-    this.formService.canNext$.next(null);
+    this.formService.submitForm();
   }
 }

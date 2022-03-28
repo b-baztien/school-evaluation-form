@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormService } from '../../../services/form/form.service';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { first, Subject, takeUntil, tap } from 'rxjs';
 import { FormUser } from '../../../interfaces/form-user.interface';
+import { RootStoreService } from '../../../services/root-store/root-store.service';
 import { ConfigurationForm } from '../../../utils/configulation-form';
 import {
   CustomValidator,
@@ -63,12 +64,23 @@ export class UserFormComponent implements OnDestroy {
   formUser!: Partial<FormUser>;
   destroy$ = new Subject<void>();
 
-  constructor(private formService: FormService) {
-    this.formUser = JSON.parse(localStorage.getItem('formUser') || '{}');
+  constructor(
+    private rootStoreService: RootStoreService,
+    private formService: FormService
+  ) {
+    this.rootStoreService.formUser$
+      .pipe(
+        first(),
+        tap({ next: (formUser) => (this.formUser = { ...formUser }) }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+
+    this.formService.getSubmitSubject
+      .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
+      .subscribe();
 
     this.formGroup.patchValue(this.formUser);
-
-    this.onSubmit();
   }
 
   ngOnDestroy(): void {
@@ -77,21 +89,12 @@ export class UserFormComponent implements OnDestroy {
   }
 
   onSubmit() {
-    this.formService.canNext$
-      .pipe(
-        tap({
-          next: () => {
-            FormValidator.markAsTouched(this.formGroup);
-            if (this.formGroup.invalid) return;
-            localStorage.setItem(
-              'formUser',
-              JSON.stringify(this.formGroup.value)
-            );
-            this.formService.increaseFormStepIndex$.next(null);
-          },
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
+    FormValidator.markAsTouched(this.formGroup);
+    // if (this.formGroup.invalid) return;
+
+    const formUser = this.formGroup.getRawValue() as FormUser;
+
+    this.rootStoreService.submitForm(formUser);
+    this.rootStoreService.nextStep();
   }
 }

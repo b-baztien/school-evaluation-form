@@ -1,10 +1,13 @@
 <div class="tui-container">
   <div class="stepper">
-    <tui-stepper [activeItemIndex]="formStepIndex">
+    <tui-stepper [activeItemIndex]="(rootStoreService.stepIndex$ | async) ?? 0">
       <button
         tuiStep
-        *ngFor="let item of listFormStep; let i = index"
-        [disabled]="formStepIndex !== i"
+        *ngFor="
+          let item of rootStoreService.listFormStep$ | async;
+          let i = index
+        "
+        [disabled]="(rootStoreService.stepIndex$ | async) !== i"
       >
         {{ item }}
       </button>
@@ -12,15 +15,15 @@
   </div>
 
   <school-evaluation-form-user-form
-    *ngIf="formStepIndex === 0"
+    *ngIf="(rootStoreService.stepIndex$ | async) === 0"
   ></school-evaluation-form-user-form>
 
   <school-evaluation-form-form1
-    *ngIf="formStepIndex === 1 && formId === '1'"
+    *ngIf="(rootStoreService.stepIndex$ | async) === 1 && formId === '1'"
   ></school-evaluation-form-form1>
 
   <school-evaluation-form-form2
-    *ngIf="formStepIndex === 1 && formId === '2'"
+    *ngIf="(rootStoreService.stepIndex$ | async) === 1 && formId === '2'"
   ></school-evaluation-form-form2>
 
   <div class="tui-row tui-row_adaptive tui-space_top-10">
@@ -30,22 +33,20 @@
         type="button"
         appearance="primary"
         icon="tuiIconChevronLeftLarge"
-        [disabled]="formStepIndex === 0"
+        [disabled]="(rootStoreService.stepIndex$ | async) === 0"
         (click)="prevForm()"
       >
         ย้อนกลับ
       </button>
     </div>
     <div class="tui-col_lg-6 align-end">
-      <ng-container
-        *ngIf="formStepIndex !== listFormStep.length - 1; else elseTemplate"
-      >
+      <ng-container *ngIf="rootStoreService.isLastStep; else elseTemplate">
         <button
           tuiButton
           type="button"
           appearance="primary"
           iconRight="tuiIconChevronRightLarge"
-          [disabled]="formStepIndex === this.listFormStep.length - 1"
+          [disabled]="rootStoreService.isLastStep"
           (click)="nextForm()"
         >
           ถัดไป
