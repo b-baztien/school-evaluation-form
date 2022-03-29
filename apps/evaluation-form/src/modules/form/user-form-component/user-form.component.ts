@@ -90,7 +90,7 @@ export class UserFormComponent implements OnDestroy {
 
   onSubmit() {
     FormValidator.markAsTouched(this.formGroup);
-    // if (this.formGroup.invalid) return;
+    if (this.formGroup.invalid) return;
 
     const formUser = this.formGroup.getRawValue() as FormUser;
 
