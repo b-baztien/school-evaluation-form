@@ -97,11 +97,4 @@ export class Form2Component {
   ];
 
   headers = ['topic', 'operation'];
-
-  onValueChange(
-    selectedOperation: string,
-    header: { topic: string; selectedOperation?: string | undefined }
-  ) {
-    header.selectedOperation = selectedOperation;
-  }
 }
