@@ -20,9 +20,8 @@
             <td *tuiCell="'operation'" tuiTd>
               <tui-select
                 class="select"
-                [ngModel]="item.selectedOperation"
+                [(ngModel)]="item.selectedOperation"
                 [ngModelOptions]="{ updateOn: 'blur' }"
-                (ngModelChange)="onValueChange($event, item)"
               >
                 <tui-data-list-wrapper
                   *tuiDataList
@@ -61,6 +60,7 @@
       [expandable]="true"
       [tuiTextfieldMaxLength]="500"
       [tuiTextfieldLabelOutside]="true"
+      [(ngModel)]="data.feedback"
       maxlength="500"
       >ระบุข้อสังเกต/ข้อเสนอแนะ
     </tui-text-area>
