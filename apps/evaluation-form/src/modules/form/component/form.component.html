@@ -44,23 +44,23 @@
         <button
           tuiButton
           type="button"
-          appearance="primary"
-          iconRight="tuiIconChevronRightLarge"
-          [disabled]="rootStoreService.isLastStep"
+          appearance="success"
+          iconRight="tuiIconCheckLarge"
           (click)="nextForm()"
         >
-          ถัดไป
+          บันทึก
         </button>
       </ng-container>
       <ng-template #elseTemplate>
         <button
           tuiButton
           type="button"
-          appearance="success"
-          iconRight="tuiIconCheckLarge"
+          appearance="primary"
+          iconRight="tuiIconChevronRightLarge"
+          [disabled]="rootStoreService.isLastStep"
           (click)="nextForm()"
         >
-          บันทึก
+          ถัดไป
         </button>
       </ng-template>
     </div>
