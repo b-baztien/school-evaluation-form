@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, tap } from 'rxjs';
 import { FormUser } from '../../interfaces/form-user.interface';
-import { backStep, nextStep, submitForm } from '../../store/root-store.action';
+import {
+  backStep,
+  nextStep,
+  resetStep,
+  submitForm,
+} from '../../store/root-store.action';
 import { AppState } from '../../store/root-store.reducer';
 
 @Injectable({
@@ -53,5 +58,9 @@ export class RootStoreService {
 
   submitForm(form: FormUser) {
     this.store.dispatch(submitForm(form));
+  }
+
+  resetStep() {
+    this.store.dispatch(resetStep());
   }
 }

@@ -1,23 +1,29 @@
 import { createReducer, on } from '@ngrx/store';
 import { FormUser } from '../interfaces/form-user.interface';
 import { Stepper } from '../interfaces/stepper.interface';
-import { backStep, nextStep, submitForm } from './root-store.action';
+import { backStep, nextStep, resetStep, submitForm } from './root-store.action';
 
 export interface AppState {
   stepper: Stepper;
   formUser: Partial<FormUser>;
 }
 
+export const initialState: Stepper = {
+  stepIndex: 0,
+  listFormStep: [
+    'ข้อมูลผู้ทำแบบประเมิน',
+    'กรอกแบบประเมิน',
+    'Third step',
+    'Fourth step',
+  ],
+};
+
 export const stepperReducer = createReducer<Stepper>(
-  {
-    stepIndex: 0,
-    listFormStep: [
-      'ข้อมูลผู้ทำแบบประเมิน',
-      'กรอกแบบประเมิน',
-      'Third step',
-      'Fourth step',
-    ],
-  },
+  initialState,
+
+  on(resetStep, () => {
+    return { ...initialState };
+  }),
 
   on(backStep, (state) => {
     if (

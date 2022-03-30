@@ -9,3 +9,5 @@ export const submitForm = createAction(
 export const backStep = createAction('[Form Page] Go Back Step');
 
 export const nextStep = createAction('[Form Page] Go Next Step');
+
+export const resetStep = createAction('[Form Page] Reset Step');
