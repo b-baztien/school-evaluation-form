@@ -13,7 +13,7 @@ export const stepperReducer = createReducer<Stepper>(
     stepIndex: 0,
     listFormStep: [
       'ข้อมูลผู้ทำแบบประเมิน',
-      'Second step',
+      'กรอกแบบประเมิน',
       'Third step',
       'Fourth step',
     ],
