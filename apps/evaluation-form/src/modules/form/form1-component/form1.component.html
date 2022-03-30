@@ -1,1 +1,39 @@
-<p>form1 works!</p>
+<div class="tui-row tui-row_adaptive" *ngFor="let data of dataTable">
+  <div class="tui-col_lg-12">
+    <h3>{{ data.tableHeader }}</h3>
+  </div>
+  <div class="tui-col_lg-12">
+    <table tuiTable size="l" [columns]="tableHeader">
+      <thead tuiThead>
+        <tr tuiThGroup>
+          <th tuiTh style="width: 60%">ประเด็นการนิเทศ ติดตาม</th>
+          <th tuiTh style="width: 40%">สภาพการดำเนินงาน</th>
+        </tr>
+      </thead>
+      <ng-container *ngFor="let tableBody of data.tableBody">
+        <tbody
+          tuiTbody
+          [heading]="tableBody.tbodyHeading"
+          [data]="tableBody.header"
+        >
+          <tr *tuiRow="let item of tableBody.header" tuiTr>
+            <td *tuiCell="'operation'" tuiTd>
+              <tui-select
+                class="select"
+                [ngModel]="item.selectedOperation"
+                [ngModelOptions]="{ updateOn: 'blur' }"
+                (ngModelChange)="onValueChange($event, item)"
+              >
+                <tui-data-list-wrapper
+                  *tuiDataList
+                  [items]="operationType"
+                ></tui-data-list-wrapper>
+              </tui-select>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+    </table>
+  </div>
+  </div>
+  
