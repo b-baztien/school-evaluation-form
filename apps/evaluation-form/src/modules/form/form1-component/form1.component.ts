@@ -52,4 +52,6 @@ export class Form1Component {
       ],
     },
   ];
+
+  headers = ['tableHeading', 'topic', 'operation'];
 }
