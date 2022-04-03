@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, tap } from 'rxjs';
 import { FormUser } from '../../interfaces/form-user.interface';
 import {
   backStep,
@@ -20,8 +20,8 @@ export class RootStoreService {
   maxStep$ = this.store.select('stepper', 'listFormStep', 'length');
   formUser$ = this.store.select('formUser');
 
-  isLastStep = false;
-  isFirstStep = false;
+  isLastStep = new BehaviorSubject<boolean>(false);
+  isFirstStep = new BehaviorSubject<boolean>(false);
 
   constructor(private store: Store<AppState>) {
     this.stepper$.subscribe();
@@ -33,16 +33,18 @@ export class RootStoreService {
     combineLatest([this.stepIndex$, this.maxStep$])
       .pipe(
         tap(([stepIndex, maxStep]) => {
-          if (stepIndex === maxStep) {
-            this.isLastStep = true;
+          if (stepIndex === maxStep - 1) {
+            this.isLastStep.next(true);
+            return;
           }
-          this.isLastStep = false;
+          this.isLastStep.next(false);
         }),
         tap(([stepIndex]) => {
           if (stepIndex === 0) {
-            this.isFirstStep = true;
+            this.isFirstStep.next(true);
+            return;
           }
-          this.isFirstStep = false;
+          this.isFirstStep.next(false);
         })
       )
       .subscribe();

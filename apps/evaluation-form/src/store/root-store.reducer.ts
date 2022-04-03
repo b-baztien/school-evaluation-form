@@ -10,12 +10,7 @@ export interface AppState {
 
 export const initialState: Stepper = {
   stepIndex: 0,
-  listFormStep: [
-    'ข้อมูลผู้ทำแบบประเมิน',
-    'กรอกแบบประเมิน',
-    'Third step',
-    'Fourth step',
-  ],
+  listFormStep: ['ข้อมูลผู้ทำแบบประเมิน', 'กรอกแบบประเมิน', 'อัพโหลดไฟล์'],
 };
 
 export const stepperReducer = createReducer<Stepper>(
@@ -27,7 +22,7 @@ export const stepperReducer = createReducer<Stepper>(
 
   on(backStep, (state) => {
     if (
-      state.stepIndex - 1 !== state.listFormStep.length &&
+      state.stepIndex - 1 < state.listFormStep.length &&
       state.stepIndex - 1 >= 0
     ) {
       return { ...state, stepIndex: state.stepIndex - 1 };
@@ -37,7 +32,7 @@ export const stepperReducer = createReducer<Stepper>(
 
   on(nextStep, (state) => {
     if (
-      state.stepIndex + 1 !== state.listFormStep.length &&
+      state.stepIndex + 1 < state.listFormStep.length &&
       state.stepIndex + 1 >= 0
     ) {
       return { ...state, stepIndex: state.stepIndex + 1 };

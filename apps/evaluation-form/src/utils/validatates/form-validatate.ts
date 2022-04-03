@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { AbstractControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 export namespace CustomValidator {
   export const required = (option: { text?: string } = {}) => {
@@ -15,11 +20,32 @@ export namespace CustomValidator {
 }
 
 export namespace FormValidator {
-  export const markAsTouched = (formGroup: FormGroup) => {
-    for (const item of Object.keys(formGroup.controls)) {
-      formGroup.controls[item].markAsTouched();
-    }
+  export const markAsTouched = (form: FormGroup | FormArray) => {
+    if (form instanceof FormGroup) {
+      for (const item of Object.keys(form.controls)) {
+        if (form.controls[item] instanceof FormGroup) {
+          markAsTouched(form.controls[item] as FormGroup);
+          continue;
+        } else if (form.controls[item] instanceof FormArray) {
+          markAsTouched(form.controls[item] as FormArray);
+          continue;
+        }
 
+        form.controls[item].markAsDirty();
+      }
+    } else {
+      for (const item of form.controls) {
+        if (item instanceof FormGroup) {
+          markAsTouched(item as FormGroup);
+          continue;
+        } else if (item instanceof FormArray) {
+          markAsTouched(item as FormArray);
+          continue;
+        }
+
+        item.markAsTouched();
+      }
+    }
     return;
   };
 }

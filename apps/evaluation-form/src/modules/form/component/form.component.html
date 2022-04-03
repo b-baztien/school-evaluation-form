@@ -26,6 +26,10 @@
     *ngIf="(rootStoreService.stepIndex$ | async) === 1 && formId === '2'"
   ></school-evaluation-form-form2>
 
+  <school-evaluation-form-upload-form
+    *ngIf="(rootStoreService.stepIndex$ | async) === 2"
+  ></school-evaluation-form-upload-form>
+
   <div class="tui-row tui-row_adaptive tui-space_top-10">
     <div class="tui-col_lg-6">
       <button
@@ -33,14 +37,17 @@
         type="button"
         appearance="primary"
         icon="tuiIconChevronLeftLarge"
-        [disabled]="(rootStoreService.stepIndex$ | async) === 0"
+        [disabled]="(rootStoreService.isFirstStep | async) === true"
         (click)="prevForm()"
       >
         ย้อนกลับ
       </button>
     </div>
     <div class="tui-col_lg-6 align-end">
-      <ng-container *ngIf="rootStoreService.isLastStep; else elseTemplate">
+      {{ rootStoreService.isLastStep | async }}
+      <ng-container
+        *ngIf="rootStoreService.isLastStep | async; else elseTemplate"
+      >
         <button
           tuiButton
           type="button"
@@ -57,7 +64,7 @@
           type="button"
           appearance="primary"
           iconRight="tuiIconChevronRightLarge"
-          [disabled]="rootStoreService.isLastStep"
+          [disabled]="(rootStoreService.isLastStep | async) === true"
           (click)="nextForm()"
         >
           ถัดไป

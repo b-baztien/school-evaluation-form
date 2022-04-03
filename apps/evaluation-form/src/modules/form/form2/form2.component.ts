@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { TableData } from '../../../interfaces/table-data.interface';
+import { FormService } from '../../../services/form/form.service';
+import {
+  CustomValidator,
+  FormValidator,
+} from '../../../utils/validatates/form-validatate';
 
 @Component({
   selector: 'school-evaluation-form-form2',
@@ -7,9 +15,7 @@ import { TableData } from '../../../interfaces/table-data.interface';
   styleUrls: ['./form2.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Form2Component {
-  operationType = ['ดำเนินการแล้ว', 'อยู่ระหว่างดำเนินการ', 'ไม่ดำเนินการ'];
-
+export class Form2Component implements OnDestroy {
   dataTable: TableData[] = [
     {
       tableHeader: '1.ด้านการบริหารจัดการสถานศึกษา',
@@ -96,5 +102,62 @@ export class Form2Component {
     },
   ];
 
+  formGroups = this.dataTable.map(
+    (tableData) =>
+      new FormGroup({
+        tableBody: new FormArray(
+          tableData.tableBody.map(
+            (item) =>
+              new FormArray(
+                item.header.map(
+                  () => new FormControl('', CustomValidator.required())
+                )
+              )
+          )
+        ),
+        evidence: new FormControl([]),
+        feedback: new FormControl(''),
+      })
+  );
+
+  operationType = ['ดำเนินการแล้ว', 'อยู่ระหว่างดำเนินการ', 'ไม่ดำเนินการ'];
+
   headers = ['topic', 'operation'];
+
+  destroy$ = new Subject<void>();
+
+  constructor(
+    private formService: FormService,
+    private rootStoreService: RootStoreService
+  ) {
+    this.formService.getSubmitSubject
+      .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onSubmit() {
+    for (const i in this.formGroups) {
+      this.formGroups[i].markAllAsTouched();
+
+      // if (this.formGroups[i].invalid) return;
+
+      const formUser = this.formGroups[i].getRawValue();
+
+      const tableBody = formUser.tableBody as [][];
+
+      for (const j in tableBody) {
+        for (const k in tableBody[j]) {
+          this.dataTable[i].tableBody[j].header[k].selectedOperation =
+            formUser.tableBody[j][k];
+        }
+      }
+
+      this.rootStoreService.nextStep();
+    }
+  }
 }

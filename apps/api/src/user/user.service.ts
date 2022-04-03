@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { from, map } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,22 +14,20 @@ export class UserService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.userRepository.save(createUserDto);
   }
 
   findAll() {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findByUsername(username: string) {
+    return this.userRepository.find({ where: { username: username } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  update(username: string, updateUserDto: UpdateUserDto) {
+    return from(
+      this.userRepository.update({ username: username }, updateUserDto)
+    ).pipe(map((result) => result.raw.matchedCount > 0));
   }
 }
