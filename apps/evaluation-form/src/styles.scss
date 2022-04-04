@@ -100,3 +100,12 @@ tui-radio-labeled,
 table {
   width: 100%;
 }
+
+div >.icon-xl {
+  tui-svg  {
+    width: 4rem;
+    height: 4rem;
+  
+    font-size: 2rem;
+  }
+}

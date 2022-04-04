@@ -1,1 +1,31 @@
-<p>upload-form works!</p>
+<div class="align-center">
+  <div class="container">
+    <h1>อัปโหลดไฟล์</h1>
+    <div class="upload-container">
+      <div class="border-container">
+        <div class="icons icon-xl">
+          <tui-svg src="tuiIconFolderLarge"></tui-svg>
+          <tui-svg src="tuiIconImgLarge"></tui-svg>
+          <tui-svg src="tuiIconFileLarge"></tui-svg>
+        </div>
+
+        <input type="file" id="file-upload" #fileUpload />
+
+        <p>
+          {{ uploadFileTxt | async }}
+          <a
+            href="#"
+            *ngIf="uploadFileTxt | async"
+            (click)="onFileBrowserClick($event)"
+          >
+            เปลี่ยนไฟล์
+          </a>
+        </p>
+        <p *ngIf="(uploadFileTxt | async) === ''">
+          <a href="#" (click)="onFileBrowserClick($event)">เลือกไฟล์</a>
+          จากคอมพิวเตอร์ของคุณ
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

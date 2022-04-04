@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
-import { map, Subject } from 'rxjs';
 import { RootStoreService } from '../../../services/root-store/root-store.service';
 
 @Component({

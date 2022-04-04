@@ -44,7 +44,6 @@
       </button>
     </div>
     <div class="tui-col_lg-6 align-end">
-      {{ rootStoreService.isLastStep | async }}
       <ng-container
         *ngIf="rootStoreService.isLastStep | async; else elseTemplate"
       >
