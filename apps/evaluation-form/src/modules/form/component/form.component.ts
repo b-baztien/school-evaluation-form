@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
 import { RootStoreService } from '../../../services/root-store/root-store.service';
@@ -16,7 +17,8 @@ export class FormComponent implements OnDestroy {
 
   constructor(
     public rootStoreService: RootStoreService,
-    private formService: FormService
+    private formService: FormService,
+    private router: Router
   ) {
     this.formId = localStorage.getItem('formId') ?? '';
   }
@@ -32,5 +34,9 @@ export class FormComponent implements OnDestroy {
 
   nextForm() {
     this.formService.submitForm();
+  }
+
+  goToResult() {
+    this.router.navigate(['/result']);
   }
 }

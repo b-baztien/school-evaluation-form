@@ -6,11 +6,6 @@
   [fullScreen]="true"
   ><p style="color: white">กำลังโหลด...</p></ngx-spinner
 >
-
-<tui-theme-night
-  *ngIf="(themingService.theme | async) === 'onDark'"
-></tui-theme-night>
-
 <nav>
   <div class="tui-container_fullwidth">
     <div class="tui-row tui-row_adaptive">
@@ -28,6 +23,7 @@
     </div>
   </div>
 </nav>
+
 <tui-scrollbar>
   <tui-root>
     <router-outlet></router-outlet>

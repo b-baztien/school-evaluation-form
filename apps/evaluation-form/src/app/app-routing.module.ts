@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('../modules/login/login.module').then((m) => m.LoginModule),
+    redirectTo: '/result',
+    pathMatch: 'full',
   },
   {
     path: 'login',
@@ -21,6 +21,11 @@ const routes: Routes = [
     path: 'form',
     loadChildren: () =>
       import('../modules/form/form.module').then((m) => m.FormModule),
+  },
+  {
+    path: 'result',
+    loadChildren: () =>
+      import('../modules/result/result.module').then((m) => m.ResultModule),
   },
   {
     path: '**',

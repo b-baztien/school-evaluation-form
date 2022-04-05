@@ -101,11 +101,39 @@ table {
   width: 100%;
 }
 
-div >.icon-xl {
-  tui-svg  {
+div > .icon-xl {
+  tui-svg {
     width: 4rem;
     height: 4rem;
-  
+
     font-size: 2rem;
+  }
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  nav,
+  footer,
+  header,
+  .tui-wrapper {
+    display: none;
+  }
+
+  #section-to-print,
+  #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
