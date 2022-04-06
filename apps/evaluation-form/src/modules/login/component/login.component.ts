@@ -1,8 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TuiValidationError } from '@taiga-ui/cdk';
+import { LoginService } from 'apps/evaluation-form/src/services/login/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, takeUntil, tap, timer } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil, tap, timer } from 'rxjs';
 import {
   CustomValidator,
   FormValidator,
@@ -23,9 +25,15 @@ export class LoginComponent implements OnDestroy {
     ]),
   });
 
+  error = new BehaviorSubject<TuiValidationError | null>(null);
+
   destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private spinner: NgxSpinnerService) {}
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -33,15 +41,23 @@ export class LoginComponent implements OnDestroy {
   }
 
   login() {
+    this.error.next(null);
+
     FormValidator.markAsTouched(this.loginForm);
 
     if (this.loginForm.invalid) return;
 
-    timer(3000)
+    const login = this.loginForm.getRawValue();
+
+    this.loginService
+      .login(login)
       .pipe(
         tap({
           subscribe: () => this.spinner.show(),
-          complete: () => this.spinner.hide(),
+          error: ({ error }) => {
+            this.error.next(new TuiValidationError(error.message));
+          },
+          finalize: () => this.spinner.hide(),
         }),
         takeUntil(this.destroy$)
       )

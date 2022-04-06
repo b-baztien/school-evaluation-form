@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { from, tap } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -6,6 +16,24 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Post('login')
+  login(@Body() createUserDto: CreateUserDto) {
+    return from(this.userService.findByUsername(createUserDto.username)).pipe(
+      tap((user) => {
+        const { username, password } = user[0] ?? {};
+        if (
+          username !== createUserDto.username ||
+          password !== createUserDto.password
+        ) {
+          throw new HttpException(
+            'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+            HttpStatus.UNAUTHORIZED
+          );
+        }
+      })
+    );
+  }
 
   @Get('generate') generateUser() {
     const staffs = [

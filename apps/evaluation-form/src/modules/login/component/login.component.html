@@ -28,6 +28,10 @@
             formControlName="password"
             [error]="[] | tuiFieldError | async"
           ></tui-field-error>
+          <tui-error
+            class="input tui-space_top-5"
+            [error]="error | async"
+          ></tui-error>
           <button
             tuiButton
             type="submit"

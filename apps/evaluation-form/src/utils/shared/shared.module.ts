@@ -6,6 +6,7 @@ import {
   TuiButtonModule,
   TuiDataListModule,
   TuiDialogModule,
+  TuiErrorModule,
   TuiGroupModule,
   TuiHintControllerModule,
   TuiLabelModule,
@@ -93,6 +94,7 @@ import { TuiPreviewModule } from '@taiga-ui/addon-preview';
     TuiTextfieldControllerModule,
     TuiScrollbarModule,
     TuiPreviewModule,
+    TuiErrorModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },
