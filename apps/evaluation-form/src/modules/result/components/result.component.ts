@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
 })
-export class ResultComponent {}
+export class ResultComponent {
+  show() {
+    window.print();
+  }
+}

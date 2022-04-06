@@ -12,6 +12,7 @@ import {
   TuiModeModule,
   TuiNotificationsModule,
   TuiRootModule,
+  TuiScrollbarModule,
   TuiSvgModule,
   TuiTextfieldControllerModule,
   TuiThemeNightModule,
@@ -44,6 +45,7 @@ import {
   TuiTextAreaModule,
 } from '@taiga-ui/kit';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 
 @NgModule({
   declarations: [],
@@ -89,6 +91,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     TuiTooltipModule,
     TuiHintControllerModule,
     TuiTextfieldControllerModule,
+    TuiScrollbarModule,
+    TuiPreviewModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },

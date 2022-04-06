@@ -1,10 +1,9 @@
-@media print {
-  #section-to-print * {
-    visibility: visible;
-  }
-  #section-to-print {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+.tui-row {
+  justify-content: center;
+  place-content: center;
+}
+
+#section-to-print {
+  width: 595px;
+  height: 842px;
 }
