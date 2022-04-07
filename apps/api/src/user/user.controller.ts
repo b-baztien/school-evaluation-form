@@ -8,9 +8,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { from, tap } from 'rxjs';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from '@school-evaluation-form/api-interfaces';
+import { from, map, tap } from 'rxjs';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -18,13 +17,14 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('login')
-  login(@Body() createUserDto: CreateUserDto) {
-    return from(this.userService.findByUsername(createUserDto.username)).pipe(
-      tap((user) => {
-        const { username, password } = user[0] ?? {};
+  login(@Body() user: User) {
+    return from(this.userService.findByUsername(user.username)).pipe(
+      map((result) => result[0]),
+      tap((result) => {
+        const userResult = (result ?? {}) as User;
         if (
-          username !== createUserDto.username ||
-          password !== createUserDto.password
+          userResult.username !== user.username ||
+          userResult.password !== user.password
         ) {
           throw new HttpException(
             'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
@@ -70,7 +70,7 @@ export class UserController {
     ];
 
     for (const index in staffs) {
-      const user: CreateUserDto = {
+      const user: User = {
         username: index.padStart(3, '0'),
         password: index.padStart(3, '0'),
         role: 'staff',
@@ -79,7 +79,7 @@ export class UserController {
     }
 
     for (const item of teachers) {
-      const user: CreateUserDto = {
+      const user: User = {
         username: item.toString(),
         password: item.toString(),
         role: 'teacher',
@@ -99,10 +99,7 @@ export class UserController {
   }
 
   @Patch(':username')
-  update(
-    @Param('username') username: string,
-    @Body() updateUserDto: UpdateUserDto
-  ) {
-    return this.userService.update(username, updateUserDto);
+  update(@Param('username') username: string, @Body() user: User) {
+    return this.userService.update(username, user);
   }
 }

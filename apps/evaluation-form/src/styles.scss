@@ -8,6 +8,27 @@ body {
   background-color: #e5e7ea;
 }
 
+school-evaluation-form-root {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+nav {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+tui-root {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+footer {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
 .tui-required {
   color: red;
 }

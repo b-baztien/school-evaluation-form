@@ -1,6 +1,7 @@
 <div class="tui-container">
   <div class="tui-row">
     <tui-island
+      *ngIf="role === 'teacher'"
       (click)="goToForm('1', content1, header1, 'l')"
       size="l"
       textAlign="center"
@@ -16,6 +17,7 @@
     </tui-island>
 
     <tui-island
+      *ngIf="role === 'staff'"
       (click)="goToForm('2', content2, header2, 'l')"
       size="l"
       textAlign="center"

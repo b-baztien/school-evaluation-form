@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '@school-evaluation-form/api-interfaces';
 import { TuiValidationError } from '@taiga-ui/cdk';
 import { LoginService } from 'apps/evaluation-form/src/services/login/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -47,13 +48,17 @@ export class LoginComponent implements OnDestroy {
 
     if (this.loginForm.invalid) return;
 
-    const login = this.loginForm.getRawValue();
+    const login = this.loginForm.getRawValue() as User;
 
     this.loginService
       .login(login)
       .pipe(
         tap({
           subscribe: () => this.spinner.show(),
+          next: (result) => {
+            console.log(result);
+            sessionStorage.setItem('user', JSON.stringify(result));
+          },
           error: ({ error }) => {
             this.error.next(new TuiValidationError(error.message));
           },

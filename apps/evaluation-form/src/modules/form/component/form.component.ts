@@ -12,6 +12,7 @@ import { RootStoreService } from '../../../services/root-store/root-store.servic
 })
 export class FormComponent implements OnDestroy {
   formId!: string;
+  role!: string;
 
   destroy$ = new Subject<void>();
 
@@ -20,6 +21,8 @@ export class FormComponent implements OnDestroy {
     private formService: FormService,
     private router: Router
   ) {
+    const { role } = JSON.parse(sessionStorage.getItem('user') ?? '');
+    this.role = role;
     this.formId = localStorage.getItem('formId') ?? '';
   }
 

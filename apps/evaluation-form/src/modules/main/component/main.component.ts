@@ -14,12 +14,18 @@ import { Subject, takeUntil, tap } from 'rxjs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnDestroy {
+  role!: string;
+
   destroy$ = new Subject<void>();
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private router: Router
-  ) {}
+  ) {
+    const { role } = JSON.parse(sessionStorage.getItem('user') ?? '');
+    console.log(sessionStorage.getItem('user'));
+    this.role = role;
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

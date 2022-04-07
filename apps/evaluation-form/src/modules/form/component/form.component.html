@@ -19,11 +19,19 @@
   ></school-evaluation-form-user-form>
 
   <school-evaluation-form-form1
-    *ngIf="(rootStoreService.stepIndex$ | async) === 1 && formId === '1'"
+    *ngIf="
+      (rootStoreService.stepIndex$ | async) === 1 &&
+      formId === '1' &&
+      role === 'teacher'
+    "
   ></school-evaluation-form-form1>
 
   <school-evaluation-form-form2
-    *ngIf="(rootStoreService.stepIndex$ | async) === 1 && formId === '2'"
+    *ngIf="
+      (rootStoreService.stepIndex$ | async) === 1 &&
+      formId === '2' &&
+      role === 'staff'
+    "
   ></school-evaluation-form-form2>
 
   <school-evaluation-form-upload-form
