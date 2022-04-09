@@ -47,7 +47,10 @@ import {
 } from '@taiga-ui/kit';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TuiPreviewModule } from '@taiga-ui/addon-preview';
-import { TuiRingChartModule } from '@taiga-ui/addon-charts';
+import {
+  TuiLegendItemModule,
+  TuiRingChartModule,
+} from '@taiga-ui/addon-charts';
 @NgModule({
   declarations: [],
   exports: [
@@ -96,6 +99,7 @@ import { TuiRingChartModule } from '@taiga-ui/addon-charts';
     TuiPreviewModule,
     TuiErrorModule,
     TuiRingChartModule,
+    TuiLegendItemModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },

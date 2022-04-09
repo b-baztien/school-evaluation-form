@@ -1,0 +1,30 @@
+<tui-island class="align-center">
+  <div class="wrapper tui-space_vertical-4">
+    <tui-ring-chart
+      class="score-chart"
+      size="l"
+      [value]="value"
+      [content]="content"
+      [(activeItemIndex)]="activeItemIndex!"
+    ></tui-ring-chart>
+  </div>
+  <h1 class="tui-island__title">{{ title }}</h1>
+
+  <tui-legend-item
+    *ngFor="let label of labels; let index = index"
+    size="s"
+    class="item"
+    [color]="getColor(index)"
+    [text]="label"
+    [active]="isItemActive(index)"
+    (mouseover)="onHover(index, true)"
+    (mouseout)="onHover(index, false)"
+  >
+    {{ value[index] }}
+  </tui-legend-item>
+</tui-island>
+
+<ng-template #content let-index>
+  <h3>{{ getValue(index) | number }}</h3>
+  <div>{{ getLabel(index) }}</div>
+</ng-template>

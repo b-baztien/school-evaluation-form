@@ -161,3 +161,8 @@ div > .icon-xl {
     visibility: visible;
   }
 }
+
+:root .score-chart {
+  --tui-chart-0: var(--tui-success-fill);
+  --tui-chart-1: var(--tui-base-04);
+}

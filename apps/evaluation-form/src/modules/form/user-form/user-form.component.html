@@ -123,7 +123,7 @@
               formControlName="fullname"
               class="tui-group__inherit-item"
             >
-              ชื่อ-สกุล ครูที่รับผิดชอบ
+              ชื่อ-สกุล {{ role === 'teacher' ? 'ครู' : '' }}ที่รับผิดชอบ
               <span class="tui-required"></span>
             </tui-input>
             <tui-field-error
@@ -168,7 +168,10 @@
         สำนักงานเขตพื้นที่การศึกษาประถมศึกษาลำปาง เขต 1
       </h2>
 
-      <div class="tui-form__row tui-form__row_multi-fields">
+      <div
+        class="tui-form__row tui-form__row_multi-fields"
+        *ngIf="role === 'staff'"
+      >
         <div class="tui-form__multi-field self-center">
           <h3 class="font-nomal">ครั้งที่นิเทศ ติดตาม</h3>
         </div>

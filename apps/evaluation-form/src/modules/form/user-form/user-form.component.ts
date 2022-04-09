@@ -9,6 +9,7 @@ import {
   CustomValidator,
   FormValidator,
 } from '../../../utils/validatates/form-validatate';
+import { User } from '@school-evaluation-form/api-interfaces';
 
 @Component({
   selector: 'school-evaluation-form-user-form',
@@ -64,10 +65,15 @@ export class UserFormComponent implements OnDestroy {
   formUser!: Partial<FormUser>;
   destroy$ = new Subject<void>();
 
+  role!: string;
+
   constructor(
     private rootStoreService: RootStoreService,
     private formService: FormService
   ) {
+    const { role } = JSON.parse(sessionStorage.getItem('user') ?? '{}') as User;
+    this.role = role;
+
     this.rootStoreService.formUser$
       .pipe(
         first(),
