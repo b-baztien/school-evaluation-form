@@ -1,47 +1,44 @@
-<div class="tui-container_fullwidth bg">
-  <div class="tui-row">
-    <div
-      style="margin-top: 30vh"
-      class="tui-col_xs-12 tui-col-offset_md-4 tui-col_md-4 tui-col-offset_lg-4 tui-col_lg-4"
-    >
-      <tui-island size="l" textAlign="center">
-        <h3>เข้าสู่ระบบ</h3>
-        <form [formGroup]="loginForm" (submit)="login()">
-          <tui-input
-            formControlName="username"
-            class="input"
-            [tuiTextfieldLabelOutside]="true"
-          >
-            ชื่อผู้ใช้งาน
-          </tui-input>
-          <tui-field-error
-            formControlName="username"
-            [error]="[] | tuiFieldError | async"
-          ></tui-field-error>
-          <tui-input-password
-            formControlName="password"
-            class="input tui-space_top-5"
-          >
-            รหัสผ่าน
-          </tui-input-password>
-          <tui-field-error
-            formControlName="password"
-            [error]="[] | tuiFieldError | async"
-          ></tui-field-error>
-          <tui-error
-            class="input tui-space_top-5"
-            [error]="error | async"
-          ></tui-error>
-          <button
-            tuiButton
-            type="submit"
-            appearance="primary"
-            class="tui-space_top-5"
-          >
-            เข้าสู่ระบบ
-          </button>
-        </form>
-      </tui-island>
-    </div>
+<div class="tui-row">
+  <div
+    class="tui-col_xs-12 tui-col-offset_md-4 tui-col_md-4 tui-col-offset_lg-4 tui-col_lg-4"
+  >
+    <tui-island size="l" textAlign="center">
+      <h3>เข้าสู่ระบบ</h3>
+      <form [formGroup]="loginForm" (submit)="login()">
+        <tui-input
+          formControlName="username"
+          class="input"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          ชื่อผู้ใช้งาน
+        </tui-input>
+        <tui-field-error
+          formControlName="username"
+          [error]="[] | tuiFieldError | async"
+        ></tui-field-error>
+        <tui-input-password
+          formControlName="password"
+          class="input tui-space_top-5"
+        >
+          รหัสผ่าน
+        </tui-input-password>
+        <tui-field-error
+          formControlName="password"
+          [error]="[] | tuiFieldError | async"
+        ></tui-field-error>
+        <tui-error
+          class="input tui-space_top-5"
+          [error]="error | async"
+        ></tui-error>
+        <button
+          tuiButton
+          type="submit"
+          appearance="primary"
+          class="tui-space_top-5"
+        >
+          เข้าสู่ระบบ
+        </button>
+      </form>
+    </tui-island>
   </div>
 </div>

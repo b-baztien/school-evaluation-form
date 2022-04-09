@@ -1,7 +1,5 @@
-.bg {
-  width: 96.9vw;
-  height: 100vh;
-  background-image: url('../../../assets/images/background.png');
+:host ::ng-deep .content {
+  background-image: url('../../../assets/images/background.png') !important;
 }
 
 tui-field-error {

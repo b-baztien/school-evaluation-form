@@ -118,6 +118,15 @@ tui-radio-labeled,
   align-self: center;
 }
 
+tui-island {
+  &:not(&_hoverable):before {
+    box-sizing: border-box;
+    border: 5px solid var(--tui-secondary) !important;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
 table {
   width: 100%;
 }

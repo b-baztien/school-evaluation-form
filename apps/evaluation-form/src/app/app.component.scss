@@ -1,19 +1,16 @@
-body {
-  background-image: url('https://img.freepik.com/free-vector/flat-design-abstract-background_23-2149116123.jpg?t=st=1647936786~exp=1647937386~hmac=92219affed80cef98786ef7dd487db2439a37873d1a797c74a7675c98097db16&w=996');
-}
-
 nav {
   height: fit-content;
   background-color: #00a4e4;
   width: 100vw;
 }
 
-.footer {
+footer {
+  margin-top: 4rem;
   background-color: #fafafa;
 }
 
 .tui-container {
-  background-color: #fff;
+  background-color: var(--tui-base-01);
   padding: 2rem;
   height: 100%;
 }
