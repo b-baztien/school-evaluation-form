@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { FormUser } from '../interfaces/form-user.interface';
+import { UserForm } from '@school-evaluation-form/api-interfaces';
 import { Stepper } from '../interfaces/stepper.interface';
 import { backStep, nextStep, resetStep, submitForm } from './root-store.action';
 
 export interface AppState {
   stepper: Stepper;
-  formUser: Partial<FormUser>;
+  formUser: Partial<UserForm>;
 }
 
 export const initialState: Stepper = {
@@ -41,7 +41,7 @@ export const stepperReducer = createReducer<Stepper>(
   })
 );
 
-export const formUserReducer = createReducer<Partial<FormUser>>(
+export const formUserReducer = createReducer<Partial<UserForm>>(
   {},
   on(submitForm, (_, action) => {
     return { ...action };

@@ -16,6 +16,7 @@ export class ChartComponent {
 
   @Input('value') value!: number[];
   @Input('title') title!: string;
+  
   activeItemIndex: number | null = null;
 
   getValue(index: number): number {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '@school-evaluation-form/api-interfaces';
@@ -58,6 +58,7 @@ export class LoginComponent implements OnDestroy {
           next: (result) => {
             console.log(result);
             sessionStorage.setItem('user', JSON.stringify(result));
+            this.router.navigate(['/main']);
           },
           error: ({ error }) => {
             this.error.next(new TuiValidationError(error.message));
@@ -66,6 +67,6 @@ export class LoginComponent implements OnDestroy {
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe(() => this.router.navigate(['/main']));
+      .subscribe();
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { UserForm } from '@school-evaluation-form/api-interfaces';
 import { BehaviorSubject, combineLatest, tap } from 'rxjs';
-import { FormUser } from '../../interfaces/form-user.interface';
 import {
   backStep,
   nextStep,
@@ -58,7 +58,7 @@ export class RootStoreService {
     this.store.dispatch(nextStep());
   }
 
-  submitForm(form: FormUser) {
+  submitForm(form: UserForm) {
     this.store.dispatch(submitForm(form));
   }
 

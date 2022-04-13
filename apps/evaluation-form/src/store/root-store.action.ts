@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { FormUser } from '../interfaces/form-user.interface';
+import { UserForm } from '@school-evaluation-form/api-interfaces';
 
 export const submitForm = createAction(
   '[UserForm Page] Submit Form',
-  props<FormUser>()
+  props<UserForm>()
 );
 
 export const backStep = createAction('[Form Page] Go Back Step');

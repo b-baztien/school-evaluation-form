@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormService } from '../../../services/form/form.service';
+import { User, UserForm } from '@school-evaluation-form/api-interfaces';
 import { first, Subject, takeUntil, tap } from 'rxjs';
-import { FormUser } from '../../../interfaces/form-user.interface';
+import { FormService } from '../../../services/form/form.service';
 import { RootStoreService } from '../../../services/root-store/root-store.service';
 import { ConfigurationForm } from '../../../utils/configulation-form';
 import {
   CustomValidator,
   FormValidator,
 } from '../../../utils/validatates/form-validatate';
-import { User } from '@school-evaluation-form/api-interfaces';
 
 @Component({
   selector: 'school-evaluation-form-user-form',
@@ -18,7 +17,7 @@ import { User } from '@school-evaluation-form/api-interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent implements OnDestroy {
-  forms: ConfigurationForm<FormUser> = {
+  forms: ConfigurationForm<UserForm> = {
     schoolName: new FormControl(
       '',
       CustomValidator.required({ text: 'โรงเรียน' })
@@ -62,7 +61,7 @@ export class UserFormComponent implements OnDestroy {
   };
 
   formGroup = new FormGroup(this.forms);
-  formUser!: Partial<FormUser>;
+  formUser!: Partial<UserForm>;
   destroy$ = new Subject<void>();
 
   role!: string;
@@ -98,7 +97,7 @@ export class UserFormComponent implements OnDestroy {
     FormValidator.markAsTouched(this.formGroup);
     // if (this.formGroup.invalid) return;
 
-    const formUser = this.formGroup.getRawValue() as FormUser;
+    const formUser = this.formGroup.getRawValue() as UserForm;
 
     this.rootStoreService.submitForm(formUser);
     this.rootStoreService.nextStep();

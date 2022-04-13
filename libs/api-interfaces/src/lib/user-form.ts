@@ -1,4 +1,4 @@
-export interface FormUser {
+export interface UserForm {
   schoolName: string;
   group: string;
   address: string;
