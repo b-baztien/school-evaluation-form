@@ -1,3 +1,4 @@
+import { FormStaff, FormTeacher } from '@school-evaluation-form/api-interfaces';
 import { Entity, ObjectIdColumn, ObjectID, Column, Timestamp } from 'typeorm';
 
 @Entity()
@@ -43,4 +44,13 @@ export class UserForm {
 
   @Column()
   date: Date;
+
+  @Column()
+  formTeacher?: FormTeacher;
+
+  @Column()
+  formStaff?: FormStaff;
+
+  @Column()
+  user_Id: ObjectID;
 }

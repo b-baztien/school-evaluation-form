@@ -7,7 +7,11 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { UserForm } from '@school-evaluation-form/api-interfaces';
+import {
+  FormStaff,
+  FormTeacher,
+  UserForm,
+} from '@school-evaluation-form/api-interfaces';
 import { UserFormService } from './user-form.service';
 
 @Controller('user-form')
@@ -15,8 +19,16 @@ export class UserFormController {
   constructor(private readonly userFormService: UserFormService) {}
 
   @Post()
-  create(@Body() userForm: UserForm) {
-    return this.userFormService.create(userForm);
+  create(
+    @Body()
+    object: {
+      username: string;
+      userForm: UserForm;
+      formStaff: FormStaff;
+      formTeacher: FormTeacher;
+    }
+  ) {
+    return this.userFormService.create(object);
   }
 
   @Get()
