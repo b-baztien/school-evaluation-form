@@ -6,6 +6,8 @@ import {
   TuiDialogSize,
 } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
+import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
@@ -20,6 +22,7 @@ export class MainComponent implements OnDestroy {
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    private rootStoreService: RootStoreService,
     private router: Router
   ) {
     const { role } = JSON.parse(sessionStorage.getItem('user') ?? '');
@@ -47,6 +50,7 @@ export class MainComponent implements OnDestroy {
         tap({
           next: () => {
             this.router.navigate(['/form']);
+            this.rootStoreService.resetStep();
             localStorage.setItem('formId', formId);
             this.ngOnDestroy();
           },

@@ -29,6 +29,10 @@ export class UserFormService {
       where: { username: username },
     });
 
+    if (!user) {
+      throw new Error('User not found');
+    }
+
     const dataForAdd = {
       ...userForm,
       user_Id: user._id,
