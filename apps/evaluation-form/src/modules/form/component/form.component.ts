@@ -18,8 +18,7 @@ export class FormComponent implements OnDestroy {
 
   constructor(
     public rootStoreService: RootStoreService,
-    private formService: FormService,
-    private router: Router
+    private formService: FormService
   ) {
     const { role } = JSON.parse(sessionStorage.getItem('user') ?? '');
     this.role = role;
@@ -37,9 +36,5 @@ export class FormComponent implements OnDestroy {
 
   nextForm() {
     this.formService.submitForm();
-  }
-
-  goToResult() {
-    this.router.navigate(['/result']);
   }
 }

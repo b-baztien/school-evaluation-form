@@ -1,3 +1,6 @@
+import { FormStaff } from './form-staff';
+import { FormTeacher } from './form-teacher';
+
 export interface UserForm {
   schoolName: string;
   group: string;
@@ -11,5 +14,9 @@ export interface UserForm {
   startYear: string;
   phone: string;
   time: string;
-  date: string;
+  date: Date;
+  formStaff?: FormStaff[];
+  formTeacher?: FormTeacher[];
+  fileName: string;
+  username: string;
 }

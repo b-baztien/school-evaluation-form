@@ -24,6 +24,28 @@ export class RootStoreService {
   isFirstStep = new BehaviorSubject<boolean>(false);
 
   constructor(private store: Store<AppState>) {
+    console.log(new Date());
+
+    const formUser: UserForm = {
+      schoolName: 'แม่แป้นวิทยา',
+      group: 'ขุนงาว',
+      address: 'ที่อยู่',
+      district: 'อำเภอ',
+      province: 'ลำปาง',
+      managerName: 'ชื่อผู้อำนวยการ',
+      startPostionYear: '2565',
+      managerPhone: '0812345678',
+      fullname: 'ชื่อผู้รับผิดชอบ',
+      startYear: '2565',
+      phone: '0812345678',
+      time: '1',
+      date: new Date(),
+      fileName: '',
+      username: '001',
+    };
+
+    this.submitForm(formUser);
+
     this.stepper$.subscribe();
 
     this.effectStepChange();
@@ -58,7 +80,7 @@ export class RootStoreService {
     this.store.dispatch(nextStep());
   }
 
-  submitForm(form: UserForm) {
+  submitForm(form: Partial<UserForm>) {
     this.store.dispatch(submitForm(form));
   }
 

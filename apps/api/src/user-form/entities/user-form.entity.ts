@@ -53,4 +53,7 @@ export class UserForm {
 
   @Column()
   user_Id: ObjectID;
+
+  @Column()
+  username: string;
 }

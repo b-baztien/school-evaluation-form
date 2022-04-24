@@ -3,7 +3,7 @@ import { UserForm } from '@school-evaluation-form/api-interfaces';
 
 export const submitForm = createAction(
   '[UserForm Page] Submit Form',
-  props<UserForm>()
+  props<Partial<UserForm>>()
 );
 
 export const backStep = createAction('[Form Page] Go Back Step');

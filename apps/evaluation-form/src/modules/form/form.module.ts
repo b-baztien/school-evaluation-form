@@ -15,7 +15,6 @@ import { UserFormComponent } from './user-form/user-form.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     FormComponent,
-    InputNumberDirective,
     UserFormComponent,
     Form1Component,
     Form2Component,

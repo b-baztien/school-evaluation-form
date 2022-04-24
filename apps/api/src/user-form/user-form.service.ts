@@ -17,16 +17,9 @@ export class UserFormService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  async create(object: {
-    username: string;
-    userForm: UserForm;
-    formStaff: FormStaff;
-    formTeacher: FormTeacher;
-  }) {
-    const { username, userForm, formStaff, formTeacher } = object;
-
+  async create(userForm: UserForm) {
     const user = await this.userRepository.findOne({
-      where: { username: username },
+      where: { username: userForm.username },
     });
 
     if (!user) {
@@ -36,26 +29,12 @@ export class UserFormService {
     const dataForAdd = {
       ...userForm,
       user_Id: user._id,
-      formStaff: { ...formStaff },
-      formTeacher: { ...formTeacher },
-    };
+    } as UserForm;
 
     return this.userFormRepository.save(dataForAdd);
   }
 
   findAll() {
-    return `This action returns all userForm`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} userForm`;
-  }
-
-  update(id: number, userForm: UserForm) {
-    return `This action updates a #${id} userForm`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} userForm`;
+    return this.userFormRepository.find();
   }
 }

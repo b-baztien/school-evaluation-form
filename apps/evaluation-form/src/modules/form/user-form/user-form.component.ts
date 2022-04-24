@@ -5,16 +5,12 @@ import { first, Subject, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
 import { RootStoreService } from '../../../services/root-store/root-store.service';
 import { ConfigurationForm } from '../../../utils/configulation-form';
-import {
-  CustomValidator,
-  FormValidator,
-} from '../../../utils/validatates/form-validatate';
+import { CustomValidator } from '../../../utils/validatates/form-validatate';
 
 @Component({
   selector: 'school-evaluation-form-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent implements OnDestroy {
   forms: ConfigurationForm<UserForm> = {
@@ -94,8 +90,8 @@ export class UserFormComponent implements OnDestroy {
   }
 
   onSubmit() {
-    FormValidator.markAsTouched(this.formGroup);
-    // if (this.formGroup.invalid) return;
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.invalid) return;
 
     const formUser = this.formGroup.getRawValue() as UserForm;
 

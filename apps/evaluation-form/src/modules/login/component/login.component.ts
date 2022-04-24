@@ -56,7 +56,6 @@ export class LoginComponent implements OnDestroy {
         tap({
           subscribe: () => this.spinner.show(),
           next: (result) => {
-            console.log(result);
             sessionStorage.setItem('user', JSON.stringify(result));
             this.router.navigate(['/main']);
           },

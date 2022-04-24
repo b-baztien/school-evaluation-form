@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormTeacher, UserForm } from '@school-evaluation-form/api-interfaces';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { first, Subject, takeUntil, tap } from 'rxjs';
 import { TableData } from '../../../interfaces/table-data.interface';
 import { FormService } from '../../../services/form/form.service';
 import {
@@ -16,7 +17,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Form2Component implements OnDestroy {
-  dataTable: TableData[] = [
+  dataTable: FormTeacher[] = [
     {
       tableHeader: '1.ด้านการบริหารจัดการสถานศึกษา',
       tableBody: [
@@ -126,10 +127,28 @@ export class Form2Component implements OnDestroy {
 
   destroy$ = new Subject<void>();
 
+  userForm!: Partial<UserForm>;
+
   constructor(
     private formService: FormService,
     private rootStoreService: RootStoreService
   ) {
+    this.rootStoreService.formUser$
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((formUser) => {
+        this.userForm = { ...formUser };
+      });
+
+    for (const item of this.formGroups) {
+      const form1 = item.controls['tableBody'] as any;
+      for (const item2 of form1.controls as FormArray[]) {
+        const form2 = item2.controls;
+        for (const item3 of form2) {
+          (item3 as FormControl).setValue(this.operationType[0]);
+        }
+      }
+    }
+
     this.formService.getSubmitSubject
       .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
       .subscribe();
@@ -141,23 +160,31 @@ export class Form2Component implements OnDestroy {
   }
 
   onSubmit() {
+    const formTeacher = [...this.dataTable];
     for (const i in this.formGroups) {
       this.formGroups[i].markAllAsTouched();
 
-      // if (this.formGroups[i].invalid) return;
+      if (this.formGroups[i].invalid) return;
 
-      const formUser = this.formGroups[i].getRawValue();
+      const formTeacherGroup = this.formGroups[i].getRawValue();
 
-      const tableBody = formUser.tableBody as [][];
+      const tableBody = formTeacherGroup.tableBody as [][];
+
+      formTeacher[i].evidence = formTeacherGroup.evidence;
+      formTeacher[i].feedback = formTeacherGroup.feedback;
 
       for (const j in tableBody) {
         for (const k in tableBody[j]) {
-          this.dataTable[i].tableBody[j].header[k].selectedOperation =
-            formUser.tableBody[j][k];
+          formTeacher[i].tableBody[j].header[k].selectedOperation =
+            tableBody[j][k];
         }
       }
-
-      this.rootStoreService.nextStep();
     }
+
+    this.userForm.formTeacher = [...formTeacher];
+
+    this.rootStoreService.submitForm({ ...this.userForm });
+
+    this.rootStoreService.nextStep();
   }
 }

@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiTableModule } from '@taiga-ui/addon-table';
-import { TUI_DATE_FORMAT, TUI_DATE_SEPARATOR } from '@taiga-ui/cdk';
+import {
+  TuiDestroyService,
+  TUI_DATE_FORMAT,
+  TUI_DATE_SEPARATOR,
+} from '@taiga-ui/cdk';
 import {
   TuiButtonModule,
   TuiDataListModule,
@@ -51,9 +55,15 @@ import {
   TuiLegendItemModule,
   TuiRingChartModule,
 } from '@taiga-ui/addon-charts';
+import { InputNumberDirective } from '../../directives/input-number/input-number.directive';
+import { ToNativeDateDirective } from '../../directives/to-native-date.directive';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @NgModule({
-  declarations: [],
+  declarations: [InputNumberDirective, ToNativeDateDirective],
   exports: [
+    InputNumberDirective,
+    ToNativeDateDirective,
     ReactiveFormsModule,
     FormsModule,
     TuiRootModule,
@@ -100,10 +110,13 @@ import {
     TuiErrorModule,
     TuiRingChartModule,
     TuiLegendItemModule,
+    ToastModule,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },
     { provide: TUI_DATE_SEPARATOR, useValue: '/' },
+    MessageService,
+    TuiDestroyService,
   ],
 })
 export class SharedModule {}

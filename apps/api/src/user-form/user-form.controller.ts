@@ -19,35 +19,12 @@ export class UserFormController {
   constructor(private readonly userFormService: UserFormService) {}
 
   @Post()
-  create(
-    @Body()
-    object: {
-      username: string;
-      userForm: UserForm;
-      formStaff: FormStaff;
-      formTeacher: FormTeacher;
-    }
-  ) {
-    return this.userFormService.create(object);
+  create(@Body() userForm: UserForm) {
+    return this.userFormService.create(userForm);
   }
 
   @Get()
   findAll() {
     return this.userFormService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userFormService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() userForm: UserForm) {
-    return this.userFormService.update(+id, userForm);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userFormService.remove(+id);
   }
 }
