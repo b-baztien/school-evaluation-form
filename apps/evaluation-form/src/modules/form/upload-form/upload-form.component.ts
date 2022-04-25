@@ -80,9 +80,9 @@ export class UploadFormComponent implements OnInit {
 
   onSubmit() {
     const file = this.uploadFile.value;
-    console.log({ file });
     if (!file) {
-      console.log('error');
+      this.messageService.clear();
+
       this.messageService.add({
         severity: 'error',
         summary: 'ผิดพลาด',

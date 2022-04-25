@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { TuiFieldErrorPipeModule } from '@taiga-ui/kit';
-import { InputNumberDirective } from '../../directives/input-number/input-number.directive';
 import { FormService } from '../../services/form/form.service';
 import { SharedModule } from '../../utils/shared/shared.module';
 import { FormComponent } from './component/form.component';

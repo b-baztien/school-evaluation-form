@@ -1,14 +1,18 @@
 import {
   Controller,
-  HttpStatus,
+  Get,
+  Param,
   Post,
+  StreamableFile,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { extname } from 'path';
-import { UploadFileService } from './upload-file.service';
+import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
+import { extname, join } from 'path';
+import { environment } from '../environments/environment';
+import { UploadFileService } from './upload-file.service';
 
 export const editFileName = (_, file, callback) => {
   const fileExtName = extname(file.originalname);
@@ -33,32 +37,22 @@ export class UploadFileController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './assets/files',
+        destination: join(process.cwd(), `${environment.assetPath}`),
         filename: editFileName,
       }),
       fileFilter: imageFileFilter,
     })
   )
   @Post('file')
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return file.path;
+    return file.filename;
   }
 
-  // @Get()
-  // getFile(
-  //   @Res({ passthrough: true }) res: Response,
-  //   @Param('filename') filename: string
-  // ) {
-  //   const path = join(process.cwd(), 'downloads', filename);
-  //   const file = createReadStream(path);
-  //   const stat = statSync(path);
-  //   res.set({
-  //     'Content-Type': 'application/octet-stream',
-  //     'Content-Disposition': `attachment; filename="${filename}"`,
-  //     'Content-length': stat.size,
-  //   });
-  //   return new StreamableFile(file);
-  // }
+  @Get(':fileName')
+  getFile(@Param('fileName') fileName: string) {
+    const file = createReadStream(
+      join(process.cwd(), `${environment.assetPath}/${fileName}`)
+    );
+    return new StreamableFile(file);
+  }
 }

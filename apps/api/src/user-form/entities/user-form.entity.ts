@@ -46,10 +46,10 @@ export class UserForm {
   date: Date;
 
   @Column()
-  formTeacher?: FormTeacher;
+  formTeacher?: FormTeacher[];
 
   @Column()
-  formStaff?: FormStaff;
+  formStaff?: FormStaff[];
 
   @Column()
   user_Id: ObjectID;
