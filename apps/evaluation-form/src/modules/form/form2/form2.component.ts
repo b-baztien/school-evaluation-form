@@ -1,14 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormTeacher, UserForm } from '@school-evaluation-form/api-interfaces';
+import { TuiDestroyService } from '@taiga-ui/cdk';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
-import { first, Subject, takeUntil, tap } from 'rxjs';
-import { TableData } from '../../../interfaces/table-data.interface';
+import { EMPTY, first, switchMap, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
-import {
-  CustomValidator,
-  FormValidator,
-} from '../../../utils/validatates/form-validatate';
+import { CustomValidator } from '../../../utils/validatates/form-validatate';
 
 @Component({
   selector: 'school-evaluation-form-form2',
@@ -16,7 +13,7 @@ import {
   styleUrls: ['./form2.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Form2Component implements OnDestroy {
+export class Form2Component {
   dataTable: FormTeacher[] = [
     {
       tableHeader: '1.ด้านการบริหารจัดการสถานศึกษา',
@@ -125,13 +122,12 @@ export class Form2Component implements OnDestroy {
 
   headers = ['topic', 'operation'];
 
-  destroy$ = new Subject<void>();
-
   userForm!: Partial<UserForm>;
 
   constructor(
     private formService: FormService,
-    private rootStoreService: RootStoreService
+    private rootStoreService: RootStoreService,
+    private destroy$: TuiDestroyService
   ) {
     this.rootStoreService.formUser$
       .pipe(first(), takeUntil(this.destroy$))
@@ -149,14 +145,17 @@ export class Form2Component implements OnDestroy {
       }
     }
 
-    this.formService.getSubmitSubject
-      .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.rootStoreService.stepper$.pipe(
+      switchMap((stepper) => {
+        if (stepper.stepIndex === 1) {
+          return this.formService.getSubmitSubject.pipe(
+            tap({ next: () => this.onSubmit() }),
+            takeUntil(this.destroy$)
+          );
+        }
+        return EMPTY;
+      })
+    );
   }
 
   onSubmit() {

@@ -11,35 +11,13 @@
       พิมพ์รายงาน
     </button>
 
-    <!-- <div id="section-to-print">
-      <school-evaluation-form-pdf></school-evaluation-form-pdf>
-    </div> -->
-  </div>
-  <div class="tui-col_lg-3">
-    <school-evaluation-form-chart
-      [value]="value"
-      [title]="title"
-    ></school-evaluation-form-chart>
-  </div>
-
-  <div class="tui-col_lg-3">
-    <school-evaluation-form-chart
-      [value]="value"
-      [title]="title"
-    ></school-evaluation-form-chart>
-  </div>
-
-  <div class="tui-col_lg-3">
-    <school-evaluation-form-chart
-      [value]="value"
-      [title]="title"
-    ></school-evaluation-form-chart>
-  </div>
-
-  <div class="tui-col_lg-3">
-    <school-evaluation-form-chart
-      [value]="value"
-      [title]="title"
-    ></school-evaluation-form-chart>
+    <div class="tui-col_lg-12">
+      <div class="tui-col_lg-3" *ngFor="let resultChart of listResultChart">
+        <school-evaluation-form-chart
+          [value]="resultChart.value"
+          [title]="resultChart.title"
+        ></school-evaluation-form-chart>
+      </div>
+    </div>
   </div>
 </div>

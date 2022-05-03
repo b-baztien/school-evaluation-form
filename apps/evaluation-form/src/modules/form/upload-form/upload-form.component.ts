@@ -14,6 +14,7 @@ import {
   map,
   NEVER,
   of,
+  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -92,19 +93,31 @@ export class UploadFormComponent implements OnInit {
     }
 
     this.formService
-      .uploadFile(this.user.username, file!)
+      .uploadFile(file!)
       .pipe(
         tap({
           subscribe: () => this.spinner.show(),
-          next: (fileName) => {
-            this.userForm.fileName = fileName;
-
-            this.rootStoreService.submitForm(this.userForm);
-
-            this.router.navigate(['/result']);
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'ผิดพลาด',
+              detail: err.error.message,
+            });
           },
-
           finalize: () => this.spinner.hide(),
+        }),
+        switchMap((fileName) => {
+          this.userForm = {
+            ...this.userForm,
+            fileName,
+            username: this.user.username,
+          };
+
+          this.rootStoreService.submitForm(this.userForm);
+
+          return this.formService
+            .addUserForm(this.userForm)
+            .pipe(tap({ next: () => this.router.navigate(['/result']) }));
         }),
         takeUntil(this.destroy$)
       )

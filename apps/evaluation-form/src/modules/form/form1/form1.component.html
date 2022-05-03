@@ -1,75 +1,98 @@
-<div class="tui-row tui-row_adaptive" *ngFor="let data of dataTable">
+<div
+  class="tui-row tui-row_adaptive"
+  *ngFor="let data of dataTable; let i = index"
+>
   <div class="tui-col_lg-12">
     <h3>{{ data.tableHeader }}</h3>
   </div>
-  <div class="tui-col_lg-12" *ngFor="let tableBody of data.tableBody">
-    <table tuiTable size="l" [columns]="headers">
-      <thead tuiThead>
-        <tr tuiThGroup>
-          <th tuiTh [colSpan]="3">{{ tableBody.tableMainHeading }}</th>
-        </tr>
-        <tr tuiThGroup>
-          <th tuiTh style="width: 20%">องค์ประกอบ</th>
-          <th tuiTh style="width: 40%">ตัวบ่งชี้เกณฑ์คุณภาพ</th>
-          <th tuiTh style="width: 40%">ระดับคุณภาพ</th>
-        </tr>
-      </thead>
-      <ng-container>
-        <tbody tuiTbody [data]="tableBody.tableInside">
-          <ng-container *ngFor="let tableInside1 of tableBody.tableInside">
-            <ng-container
-              *ngFor="let item of tableInside1.tablePerformance; let i = index"
-            >
-              <tr *ngIf="i === 0" tuiTr>
-                <td
-                  [rowSpan]="tableInside1.tablePerformance.length"
-                  *tuiCell="'tableHeading'"
-                  tuiTd
-                >
-                  {{ tableInside1.tableHeading }}
-                </td>
-                <td *tuiCell="'topic'" tuiTd>
-                  {{ item.topic }}
-                </td>
-                <td *tuiCell="'operation'" tuiTd>
-                  <tui-select
-                    class="select"
-                    [ngModel]="item.selectOption"
-                    [ngModelOptions]="{ updateOn: 'blur' }"
-                  >
-                    <tui-data-list-wrapper
-                      *tuiDataList
-                      [items]="operationType"
-                    ></tui-data-list-wrapper>
-                  </tui-select>
-                </td>
-              </tr>
-              <tr *ngIf="i !== 0" tuiTr>
-                <td *tuiCell="'topic'" tuiTd>
-                  {{ item.topic }}
-                </td>
-                <td *tuiCell="'operation'" tuiTd>
-                  <tui-select
-                    class="select"
-                    [ngModel]="item.selectOption"
-                    [ngModelOptions]="{ updateOn: 'blur' }"
-                  >
-                    <tui-data-list-wrapper
-                      *tuiDataList
-                      [items]="operationType"
-                    ></tui-data-list-wrapper>
-                  </tui-select>
-                </td>
-              </tr>
-            </ng-container>
-          </ng-container>
-          <tr tuiTr>
-            <td tuiTd>
-              {{ tableBody.TotalDetail }}
-            </td>
+  <div
+    class="tui-col_lg-12"
+    *ngFor="let tableBody of data.tableBody; let j = index"
+  >
+    <form [formGroup]="formGroups[i]">
+      <table tuiTable size="l" [columns]="headers">
+        <thead tuiThead>
+          <tr tuiThGroup>
+            <th tuiTh [colSpan]="3">{{ tableBody.tableMainHeading }}</th>
           </tr>
-        </tbody>
-      </ng-container>
-    </table>
+          <tr tuiThGroup>
+            <th tuiTh style="width: 20%">องค์ประกอบ</th>
+            <th tuiTh style="width: 40%">ตัวบ่งชี้เกณฑ์คุณภาพ</th>
+            <th tuiTh style="width: 40%">ระดับคุณภาพ</th>
+          </tr>
+        </thead>
+        <ng-container>
+          <tbody tuiTbody [data]="tableBody.tableInside">
+            <ng-container
+              *ngFor="let tableInside1 of tableBody.tableInside; let k = index"
+            >
+              <ng-container
+                *ngFor="
+                  let item of tableInside1.tablePerformance;
+                  let l = index
+                "
+              >
+                <tr *ngIf="l === 0" tuiTr>
+                  <td
+                    [rowSpan]="tableInside1.tablePerformance.length"
+                    *tuiCell="'tableHeading'"
+                    tuiTd
+                  >
+                    {{ tableInside1.tableHeading }}
+                  </td>
+                  <td *tuiCell="'topic'" tuiTd>
+                    {{ item.topic }}
+                  </td>
+                  <td *tuiCell="'operation'" tuiTd>
+                    <tui-select
+                      class="select"
+                      [formControl]="
+                        $any(formGroups[i]).controls['tableBody'].controls[j]
+                          .controls['tableInside'].controls[k].controls[
+                          'tablePerformance'
+                        ].controls[l].controls['selectOption']
+                      "
+                      [ngModelOptions]="{ updateOn: 'blur' }"
+                    >
+                      <tui-data-list-wrapper
+                        *tuiDataList
+                        [items]="operationType"
+                      ></tui-data-list-wrapper>
+                    </tui-select>
+                  </td>
+                </tr>
+                <tr *ngIf="l !== 0" tuiTr>
+                  <td *tuiCell="'topic'" tuiTd>
+                    {{ item.topic }}
+                  </td>
+                  <td *tuiCell="'operation'" tuiTd>
+                    <tui-select
+                      class="select"
+                      [formControl]="
+                        $any(formGroups[i]).controls['tableBody'].controls[j]
+                          .controls['tableInside'].controls[k].controls[
+                          'tablePerformance'
+                        ].controls[l].controls['selectOption']
+                      "
+                      [ngModelOptions]="{ updateOn: 'blur' }"
+                    >
+                      <tui-data-list-wrapper
+                        *tuiDataList
+                        [items]="operationType"
+                      ></tui-data-list-wrapper>
+                    </tui-select>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+            <tr tuiTr>
+              <td tuiTd>
+                {{ tableBody.totalDetail }}
+              </td>
+            </tr>
+          </tbody>
+        </ng-container>
+      </table>
+    </form>
   </div>
 </div>

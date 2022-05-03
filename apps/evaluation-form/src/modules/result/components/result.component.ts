@@ -1,5 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { sum } from '@taiga-ui/cdk';
+import { UserForm } from '@school-evaluation-form/api-interfaces';
+import { sum, TuiDestroyService } from '@taiga-ui/cdk';
+import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
+import { first, takeUntil } from 'rxjs';
+
+interface ResultChart {
+  title: string;
+  value: number[];
+}
 
 @Component({
   selector: 'school-evaluation-form-result',
@@ -8,8 +16,30 @@ import { sum } from '@taiga-ui/cdk';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultComponent {
-  value = [123, 456];
-  title = 'ด้านนโยบาย';
+  listResultChart: ResultChart[] = [];
+
+  userForm!: Partial<UserForm>;
+
+  constructor(
+    private rootStoreService: RootStoreService,
+    private destroy$: TuiDestroyService
+  ) {
+    this.rootStoreService.formUser$
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.userForm = data;
+
+        for (const tableBody of this.userForm.formStaff?.[0].tableBody ?? []) {
+          this.listResultChart = tableBody.tableInside.map((item) => {
+            return {
+              header: tableBody.tableMainHeading,
+              title: item.tableHeading ?? '',
+              value: [item.score, item.totalScore],
+            } as ResultChart;
+          });
+        }
+      });
+  }
 
   show() {
     window.print();

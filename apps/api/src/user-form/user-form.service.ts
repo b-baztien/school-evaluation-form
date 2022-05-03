@@ -14,6 +14,7 @@ export class UserFormService {
   constructor(
     @InjectRepository(UserFormEntity)
     private readonly userFormRepository: Repository<UserFormEntity>,
+    @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>
   ) {}
 

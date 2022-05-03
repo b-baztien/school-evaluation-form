@@ -24,8 +24,6 @@ export class RootStoreService {
   isFirstStep = new BehaviorSubject<boolean>(false);
 
   constructor(private store: Store<AppState>) {
-    console.log(new Date());
-
     const formUser: UserForm = {
       schoolName: 'แม่แป้นวิทยา',
       group: 'ขุนงาว',

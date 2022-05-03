@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TabaleData1 } from '../../../interfaces/table-data1.interface';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormStaff, UserForm } from '@school-evaluation-form/api-interfaces';
+import { TuiDestroyService } from '@taiga-ui/cdk';
+import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
+import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
+import { EMPTY, first, switchMap, takeUntil, tap } from 'rxjs';
+import { combineLatestInit } from 'rxjs/internal/observable/combineLatest';
 
 @Component({
   selector: 'school-evaluation-form-form1',
@@ -10,13 +16,13 @@ import { TabaleData1 } from '../../../interfaces/table-data1.interface';
 export class Form1Component {
   operationType = ['ควรปรับปรุง/แก้ไข', 'พอใช้', 'ดี', 'ดีมาก'];
 
-  dataTable: TabaleData1[] = [
+  dataTable: FormStaff[] = [
     {
       tableHeader: 'ด้านที่ 1 ด้านการบริหารจัดการสถานศึกษา',
       tableBody: [
         {
           tableMainHeading:
-            ' ด้านที่ 1 ด้านการบริหารจัดการสถานศึกษา (4 องค์ประกอบ 14 ตัวบ่งชี้ ) ',
+            'ด้านที่ 1 ด้านการบริหารจัดการสถานศึกษา (4 องค์ประกอบ 14 ตัวบ่งชี้ )',
           tableInside: [
             {
               tableHeading: 'องค์ประกอบ 1 นโยบาย',
@@ -43,7 +49,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 2 วิชาการ',
@@ -70,7 +76,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 3 งบประมาณ',
@@ -97,7 +103,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 4 บริหารงานทั่วไป',
@@ -114,11 +120,11 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
           ],
 
-          TotalDetail: '',
+          totalDetail: '',
         },
         {
           tableMainHeading:
@@ -145,7 +151,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading:
@@ -173,7 +179,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading:
@@ -196,7 +202,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading:
@@ -224,11 +230,11 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
           ],
 
-          TotalDetail: '',
+          totalDetail: '',
         },
         {
           tableMainHeading:
@@ -265,7 +271,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 2 กิจกรรมนักเรียน',
@@ -302,7 +308,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 3 กิจกรรมเพื่อสังคม และ สาธารณประโยชน์',
@@ -329,11 +335,11 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
           ],
 
-          TotalDetail: '',
+          totalDetail: '',
         },
         {
           tableMainHeading:
@@ -365,7 +371,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 2 การติดตามและขยายผล',
@@ -387,11 +393,11 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
           ],
 
-          TotalDetail: '',
+          totalDetail: '',
         },
         {
           tableMainHeading:
@@ -406,7 +412,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 2 ผู้บริหารสถานศึกษา',
@@ -418,7 +424,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 3 บุคลากรของสถานศึกษา',
@@ -450,7 +456,7 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
             {
               tableHeading: 'องค์ประกอบ 4 ผู้เรียน',
@@ -482,15 +488,112 @@ export class Form1Component {
                 },
               ],
 
-              TotalInsideDetail: '',
+              totalDetail: '',
             },
           ],
 
-          TotalDetail: '',
+          totalDetail: '',
         },
       ],
     },
   ];
 
   headers = ['tableHeading', 'topic', 'operation'];
+
+  formGroups = this.dataTable.map(
+    (dataTable) =>
+      new FormGroup({
+        tableHeader: new FormControl(dataTable.tableHeader),
+        tableBody: new FormArray(
+          dataTable.tableBody.map(
+            (tableBody) =>
+              new FormGroup({
+                tableMainHeading: new FormControl(tableBody.tableMainHeading),
+                tableInside: new FormArray(
+                  tableBody.tableInside.map(
+                    (dataInside) =>
+                      new FormGroup({
+                        tableHeading: new FormControl(dataInside.tableHeading),
+                        tablePerformance: new FormArray(
+                          dataInside.tablePerformance.map(
+                            (tablePerformance) =>
+                              new FormGroup({
+                                topic: new FormControl(tablePerformance.topic),
+                                selectOption: new FormControl(
+                                  // tablePerformance.selectOption
+                                  this.operationType[3]
+                                ),
+                              })
+                          )
+                        ),
+                        totalScore: new FormControl(dataInside.score),
+                        totalDetail: new FormControl(dataInside.totalDetail),
+                      })
+                  )
+                ),
+                TotalScore: new FormControl(tableBody.totalScore),
+                TotalDetail: new FormControl(tableBody.totalDetail),
+              })
+          )
+        ),
+      })
+  );
+
+  userForm!: Partial<UserForm>;
+
+  constructor(
+    private formService: FormService,
+    private rootStoreService: RootStoreService,
+    private destroy$: TuiDestroyService
+  ) {
+    this.rootStoreService.formUser$
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((formUser) => {
+        this.userForm = { ...formUser };
+      });
+
+    const objectStr = JSON.stringify(this.dataTable)
+      .split(`\"selectOption\":\"\"`)
+      .join(`\"selectOption\":\"${this.operationType[3]}\"`);
+
+    console.log(JSON.parse(objectStr));
+
+    this.dataTable = JSON.parse(objectStr);
+    // this.formGroups.patchValue(this.dataTable);
+  }
+
+  ngOnInit(): void {
+    this.rootStoreService.stepper$
+      .pipe(
+        switchMap((stepper) => {
+          if (stepper.stepIndex === 1) {
+            return this.formService.getSubmitSubject.pipe(
+              tap({ next: () => this.onSubmit() }),
+              takeUntil(this.destroy$)
+            );
+          }
+          return EMPTY;
+        })
+      )
+      .subscribe();
+  }
+
+  onSubmit() {
+    const formStaff: FormStaff[] = [...this.dataTable];
+    for (const i in this.formGroups) {
+      this.formGroups[i].markAllAsTouched();
+
+      if (this.formGroups[i].invalid) return;
+
+      const formStaffGroup = this.formGroups[i].getRawValue() as FormStaff;
+
+      formStaff[i] = { ...formStaffGroup };
+    }
+
+    this.userForm.formStaff = [...formStaff];
+
+    this.rootStoreService.submitForm({ ...this.userForm });
+
+    this.rootStoreService.nextStep();
+  }
 }

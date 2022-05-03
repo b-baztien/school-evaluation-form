@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   StreamableFile,
@@ -25,7 +27,13 @@ export const editFileName = (_, file, callback) => {
 
 export const imageFileFilter = (_, file, callback) => {
   if (!file.originalname.match(/\.(pdf)$/)) {
-    return callback(new Error('รองรับเฉพาะไฟล์นามสกุล pdf เท่านั้น'), false);
+    return callback(
+      new HttpException(
+        'รองรับเฉพาะไฟล์นามสกุล pdf เท่านั้น',
+        HttpStatus.BAD_REQUEST
+      ),
+      false
+    );
   }
   callback(null, true);
 };
@@ -45,7 +53,7 @@ export class UploadFileController {
   )
   @Post('file')
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return file.filename;
+    return JSON.stringify(file.filename);
   }
 
   @Get(':fileName')

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User, UserForm } from '@school-evaluation-form/api-interfaces';
+import { TuiDestroyService } from '@taiga-ui/cdk';
 import { first, Subject, takeUntil, tap } from 'rxjs';
 import { FormService } from '../../../services/form/form.service';
 import { RootStoreService } from '../../../services/root-store/root-store.service';
@@ -12,7 +13,7 @@ import { CustomValidator } from '../../../utils/validatates/form-validatate';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent implements OnDestroy {
+export class UserFormComponent {
   forms: ConfigurationForm<UserForm> = {
     schoolName: new FormControl(
       '',
@@ -58,13 +59,13 @@ export class UserFormComponent implements OnDestroy {
 
   formGroup = new FormGroup(this.forms);
   formUser!: Partial<UserForm>;
-  destroy$ = new Subject<void>();
 
   role!: string;
 
   constructor(
     private rootStoreService: RootStoreService,
-    private formService: FormService
+    private formService: FormService,
+    private destroy$: TuiDestroyService
   ) {
     const { role } = JSON.parse(sessionStorage.getItem('user') ?? '{}') as User;
     this.role = role;
@@ -78,15 +79,17 @@ export class UserFormComponent implements OnDestroy {
       .subscribe();
 
     this.formService.getSubmitSubject
-      .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
+      .pipe(
+        first(),
+        tap({
+          next: () => this.onSubmit(),
+          complete: () => console.log('complete'),
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe();
 
     this.formGroup.patchValue(this.formUser);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   onSubmit() {
