@@ -24,7 +24,10 @@ export class FormService {
   }
 
   addUserForm(userForm: Partial<UserForm>) {
-    return this.http.post(`${environment.apiEndPoint}/user-form`, userForm);
+    return this.http.post<Partial<UserForm>>(
+      `${environment.apiEndPoint}/user-form`,
+      userForm
+    );
   }
 
   submitForm() {

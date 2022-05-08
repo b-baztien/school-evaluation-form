@@ -40,8 +40,6 @@ export const imageFileFilter = (_, file, callback) => {
 
 @Controller('upload-file')
 export class UploadFileController {
-  constructor(private readonly uploadFileService: UploadFileService) {}
-
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({

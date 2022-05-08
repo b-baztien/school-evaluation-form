@@ -18,6 +18,7 @@ import {
   AppState,
   formUserReducer,
 } from '../store/root-store.reducer';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -35,6 +36,7 @@ import {
     TuiRootModule,
     TuiDialogModule,
     TuiNotificationsModule,
+    NgbModule,
   ],
   exports: [AppRoutingModule],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],

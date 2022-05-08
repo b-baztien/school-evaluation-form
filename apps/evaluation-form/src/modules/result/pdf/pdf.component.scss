@@ -24,7 +24,9 @@ h2 {
   padding: 10px 0;
   position: relative;
   background: #fff;
-  border: 8px solid #000;
+  border: 3px solid black;
+  outline: 2px solid black;
+  outline-offset: 1px;
   margin: 3px;
 }
 

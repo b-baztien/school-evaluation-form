@@ -521,7 +521,9 @@ export class Form1Component {
                                 topic: new FormControl(tablePerformance.topic),
                                 selectOption: new FormControl(
                                   // tablePerformance.selectOption
-                                  this.operationType[3]
+
+                                  //TODO remove this
+                                  this.operationType[1]
                                 ),
                               })
                           )
@@ -531,8 +533,8 @@ export class Form1Component {
                       })
                   )
                 ),
-                TotalScore: new FormControl(tableBody.totalScore),
-                TotalDetail: new FormControl(tableBody.totalDetail),
+                totalScore: new FormControl(tableBody.totalScore),
+                totalDetail: new FormControl(tableBody.totalDetail),
               })
           )
         ),
@@ -546,20 +548,9 @@ export class Form1Component {
     private rootStoreService: RootStoreService,
     private destroy$: TuiDestroyService
   ) {
-    this.rootStoreService.formUser$
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe((formUser) => {
-        this.userForm = { ...formUser };
-      });
-
-    const objectStr = JSON.stringify(this.dataTable)
-      .split(`\"selectOption\":\"\"`)
-      .join(`\"selectOption\":\"${this.operationType[3]}\"`);
-
-    console.log(JSON.parse(objectStr));
-
-    this.dataTable = JSON.parse(objectStr);
-    // this.formGroups.patchValue(this.dataTable);
+    this.rootStoreService.formUser$.pipe(first()).subscribe((formUser) => {
+      this.userForm = { ...formUser };
+    });
   }
 
   ngOnInit(): void {

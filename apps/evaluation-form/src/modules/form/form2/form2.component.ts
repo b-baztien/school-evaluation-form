@@ -135,6 +135,7 @@ export class Form2Component {
         this.userForm = { ...formUser };
       });
 
+    //TODO remove this
     for (const item of this.formGroups) {
       const form1 = item.controls['tableBody'] as any;
       for (const item2 of form1.controls as FormArray[]) {

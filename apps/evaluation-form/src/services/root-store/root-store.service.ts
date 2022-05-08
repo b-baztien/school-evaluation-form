@@ -24,6 +24,7 @@ export class RootStoreService {
   isFirstStep = new BehaviorSubject<boolean>(false);
 
   constructor(private store: Store<AppState>) {
+    //TODO remove this
     const formUser: UserForm = {
       schoolName: 'แม่แป้นวิทยา',
       group: 'ขุนงาว',

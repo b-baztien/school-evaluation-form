@@ -5,10 +5,13 @@ import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/r
 import { first, takeUntil } from 'rxjs';
 
 interface ResultChart {
-  title: string;
-  value: number[];
+  header: string;
+  listResultChart: {
+    title: string;
+    value: number[];
+  }[];
+  totalScore: number;
 }
-
 @Component({
   selector: 'school-evaluation-form-result',
   templateUrl: './result.component.html',
@@ -30,18 +33,25 @@ export class ResultComponent {
         this.userForm = data;
 
         for (const tableBody of this.userForm.formStaff?.[0].tableBody ?? []) {
-          this.listResultChart = tableBody.tableInside.map((item) => {
+          let resultChart: ResultChart = {
+            header: tableBody.tableMainHeading,
+            listResultChart: [],
+            totalScore: tableBody.totalScore!,
+          };
+
+          resultChart.listResultChart = tableBody.tableInside.map((item) => {
             return {
-              header: tableBody.tableMainHeading,
               title: item.tableHeading ?? '',
-              value: [item.score, item.totalScore],
-            } as ResultChart;
+              value: [item.score!, item.totalScore!],
+            };
           });
+
+          this.listResultChart = [...this.listResultChart, resultChart];
         }
       });
   }
 
   show() {
-    window.print();
+    window.open('/result/pdf', '_blank');
   }
 }

@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import {
   BehaviorSubject,
   combineLatest,
+  finalize,
   first,
   fromEvent,
   map,
@@ -98,13 +99,13 @@ export class UploadFormComponent implements OnInit {
         tap({
           subscribe: () => this.spinner.show(),
           error: (err) => {
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'ผิดพลาด',
               detail: err.error.message,
             });
           },
-          finalize: () => this.spinner.hide(),
         }),
         switchMap((fileName) => {
           this.userForm = {
@@ -113,12 +114,16 @@ export class UploadFormComponent implements OnInit {
             username: this.user.username,
           };
 
-          this.rootStoreService.submitForm(this.userForm);
-
-          return this.formService
-            .addUserForm(this.userForm)
-            .pipe(tap({ next: () => this.router.navigate(['/result']) }));
+          return this.formService.addUserForm(this.userForm).pipe(
+            tap({
+              next: (data) => {
+                this.rootStoreService.submitForm(data);
+                this.router.navigate(['/result']);
+              },
+            })
+          );
         }),
+        finalize(() => this.spinner.hide()),
         takeUntil(this.destroy$)
       )
       .subscribe();
