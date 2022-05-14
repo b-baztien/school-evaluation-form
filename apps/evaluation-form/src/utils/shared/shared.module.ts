@@ -59,8 +59,13 @@ import { InputNumberDirective } from '../../directives/input-number/input-number
 import { ToNativeDateDirective } from '../../directives/to-native-date.directive';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ActualDigitNumberPipe } from '../../pipe/actual-digit-number.pipe';
 @NgModule({
-  declarations: [InputNumberDirective, ToNativeDateDirective],
+  declarations: [
+    InputNumberDirective,
+    ToNativeDateDirective,
+    ActualDigitNumberPipe,
+  ],
   exports: [
     InputNumberDirective,
     ToNativeDateDirective,
@@ -111,6 +116,7 @@ import { MessageService } from 'primeng/api';
     TuiRingChartModule,
     TuiLegendItemModule,
     ToastModule,
+    ActualDigitNumberPipe,
   ],
   providers: [
     { provide: TUI_DATE_FORMAT, useValue: 'DMY' },

@@ -1,18 +1,22 @@
 export interface FormStaff {
   tableHeader: string;
-  tableBody: {
-    tableMainHeading: string;
-    tableInside: {
-      tableHeading: string;
-      tablePerformance: {
-        topic: string;
-        selectOption?: string;
-      }[];
-      score?: number;
-      totalScore?: number;
-      totalDetail?: string;
-    }[];
-    totalScore?: number;
-    totalDetail?: string;
-  }[];
+  tableBody: TableBody[];
+}
+
+export interface TableBody {
+  tableMainHeading: string | undefined;
+  tableInside: TableInside[];
+  totalScore?: number;
+  totalDetail?: string;
+}
+export interface TableInside {
+  tableHeading: string;
+  tablePerformance: TablePerformance[];
+  score?: number;
+  totalScore?: number;
+  totalDetail?: string;
+}
+export interface TablePerformance {
+  topic: string;
+  selectOption?: string;
 }

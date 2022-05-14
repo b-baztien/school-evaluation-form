@@ -34,7 +34,7 @@ export class ResultComponent {
 
         for (const tableBody of this.userForm.formStaff?.[0].tableBody ?? []) {
           let resultChart: ResultChart = {
-            header: tableBody.tableMainHeading,
+            header: tableBody.tableMainHeading as string,
             listResultChart: [],
             totalScore: tableBody.totalScore!,
           };

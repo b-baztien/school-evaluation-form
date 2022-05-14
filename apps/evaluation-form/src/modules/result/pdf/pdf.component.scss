@@ -1,33 +1,134 @@
-* {
-  background-color: #fff;
+@media print {
+  .new-page {
+    margin-top: 1.25cm !important;
+    page-break-before: always !important;
+  }
+
+  .remove-from-print {
+    display: none !important;
+  }
+
+  .remove-from-page {
+    display: block !important;
+  }
+}
+
+.remove-from-page {
+  display: none;
+}
+
+h3,
+h4,
+p,
+ol,
+li,
+span {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 32px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+.inline {
+  width: fit-content;
+  display: contents;
 }
 
 .main-div {
   margin: auto;
-  padding: 10px;
+}
+
+.header-td {
+  text-align: center;
+  vertical-align: top;
+}
+
+.end-tr {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  td {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  td:first-child {
+    text-align: end;
+  }
+
+  background-color: #d9e2f3;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
+input[type='checkbox'] {
+  accent-color: black;
 }
 
 table,
 th,
 td {
-  border-style: solid;
-  border-width: 0.1px;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+td {
+  padding: 5px;
 }
 
 textarea {
   width: 100%;
 }
 
-h2 {
+.align-center {
   text-align: center;
-  font-size: 18px;
+}
+
+.header {
+  font-size: 16px;
+  font-weight: bold;
+
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  &-border {
+    border: 3px solid black;
+    outline: 2px solid black;
+    outline-offset: 1px;
+  }
+
+  &-absolute {
+    position: absolute;
+  }
+}
+
+.py {
   padding: 10px 0;
-  position: relative;
-  background: #fff;
-  border: 3px solid black;
-  outline: 2px solid black;
-  outline-offset: 1px;
+}
+
+.m {
   margin: 3px;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
 }
 
 h2::after {
@@ -66,6 +167,26 @@ img {
   width: 20%;
 }
 
+.text-indent {
+  text-indent: 40px;
+}
+
+.li-text-indent {
+  text-indent: 60px;
+}
+
 body {
   width: 55%;
+}
+
+ol {
+  counter-reset: item;
+  padding: 0;
+}
+li {
+  display: block;
+}
+li:before {
+  content: counters(item, '.') '. ';
+  counter-increment: item;
 }

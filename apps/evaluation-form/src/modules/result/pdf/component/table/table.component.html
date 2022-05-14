@@ -1,0 +1,162 @@
+<ng-container *ngFor="let formStaff of formStaffListForPrint">
+  <h4>{{ formStaff.tableHeader }}</h4>
+  <ng-container
+    *ngFor="
+      let listTableBody of formStaff.tableBody;
+      let listTableBodyIndex = index
+    "
+  >
+    <ng-container
+      *ngFor="
+        let tableBody of splitTable(listTableBody);
+        let tableIndex = index
+      "
+    >
+      <table
+        [ngClass]="{ 'new-page': tableIndex > 0 || listTableBodyIndex > 0 }"
+      >
+        <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+        <ng-container *ngTemplateOutlet="tableHeaderMessage"></ng-container>
+        <ng-container
+          *ngFor="let tableInside of tableBody.tableInside; let i = index"
+        >
+          <ng-container
+            *ngFor="
+              let tablePerformance of tableInside.tablePerformance;
+              let j = index
+            "
+          >
+            <tr>
+              <td
+                *ngIf="j === 0"
+                [rowSpan]="tableInside.tablePerformance.length"
+                class="header-td"
+              >
+                <h4>{{ tableInside.tableHeading }}</h4>
+              </td>
+              <td>
+                {{ tablePerformance.topic }}
+              </td>
+              <td class="text-center">
+                <tui-svg
+                  *ngIf="tablePerformance.selectOption === 'ควรปรับปรุง/แก้ไข'"
+                  src="tuiIconCheckLarge"
+                ></tui-svg>
+              </td>
+              <td class="text-center">
+                <tui-svg
+                  *ngIf="tablePerformance.selectOption === 'พอใช้'"
+                  src="tuiIconCheckLarge"
+                ></tui-svg>
+              </td>
+              <td class="text-center">
+                <tui-svg
+                  *ngIf="tablePerformance.selectOption === 'ดี'"
+                  src="tuiIconCheckLarge"
+                ></tui-svg>
+              </td>
+              <td class="text-center">
+                <tui-svg
+                  *ngIf="tablePerformance.selectOption === 'ดีมาก'"
+                  src="tuiIconCheckLarge"
+                ></tui-svg>
+              </td>
+            </tr>
+            <ng-container *ngIf="j === tableInside.tablePerformance.length - 1">
+              <tr class="end-tr">
+                <td colspan="2">
+                  <h4>
+                    คะแนนรวม องค์ประกอบที่{{ i + 1 }} (คะแนนรวม÷{{
+                      tableInside.tablePerformance.length
+                    }})
+                  </h4>
+                </td>
+                <td class="text-end" colspan="4">
+                  <h4>
+                    {{
+                      tableInside.score! / tableInside.tablePerformance.length
+                        | actualDigitNumber
+                    }}
+                  </h4>
+                </td>
+              </tr>
+              <tr class="end-tr">
+                <td colspan="6">
+                  <h4 class="inline">การแปลความหมาย</h4>
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      tableInside.score! /
+                        tableInside.tablePerformance.length <=
+                      1.5
+                    "
+                  />
+                  <h4 class="inline">ปรับปรุง</h4>
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      tableInside.score! / tableInside.tablePerformance.length >
+                        1.5 &&
+                      tableInside.score! /
+                        tableInside.tablePerformance.length <=
+                        2.5
+                    "
+                  />
+                  <h4 class="inline">พอใช้</h4>
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      tableInside.score! / tableInside.tablePerformance.length >
+                        2.5 &&
+                      tableInside.score! /
+                        tableInside.tablePerformance.length <=
+                        3.5
+                    "
+                  />
+                  <h4 class="inline">ดี</h4>
+                  <input
+                    type="checkbox"
+                    [checked]="
+                      tableInside.score! / tableInside.tablePerformance.length >
+                      3.5
+                    "
+                  />
+                  <h4 class="inline">ดีมาก</h4>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          <div
+            class="remove-from-page new-page"
+            *ngIf="(i + 1) % 2 === 0 && i !== tableBody.tableInside.length - 1"
+          >
+            <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+          </div>
+        </ng-container>
+        <ng-template #tableHeader>
+          <tr>
+            <th width="15%">องค์ประกอบ</th>
+            <th width="63%">ตัวบ่งชี้เกณฑ์คุณภาพ</th>
+            <th colspan="4" width="22%">ระดับคุณภาพ</th>
+          </tr>
+          <tr class="text-center">
+            <th colspan="2"></th>
+            <th width="5.5%">1</th>
+            <th width="5.5%">2</th>
+            <th width="5.5%">3</th>
+            <th width="5.5%">4</th>
+          </tr>
+        </ng-template>
+        <ng-template #tableHeaderMessage>
+          <tr *ngIf="tableBody.tableMainHeading">
+            <td colspan="6">
+              <h4>
+                {{ tableBody.tableMainHeading }}
+              </h4>
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </ng-container>
+  </ng-container>
+</ng-container>

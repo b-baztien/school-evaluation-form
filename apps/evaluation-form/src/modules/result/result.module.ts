@@ -5,10 +5,11 @@ import { ChartComponent } from './chart/chart.component';
 import { ResultComponent } from './components/result.component';
 import { PdfComponent } from './pdf/pdf.component';
 import { ResultRoutingModule } from './result-routing.module';
+import { TableComponent } from './pdf/component/table/table.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [ResultComponent, PdfComponent, ChartComponent],
+  declarations: [ResultComponent, PdfComponent, ChartComponent, TableComponent],
   imports: [CommonModule, ResultRoutingModule, SharedModule],
 })
 export class ResultModule {}
