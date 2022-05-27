@@ -25,7 +25,7 @@ export const editFileName = (_, file, callback) => {
   callback(null, `${randomName}${fileExtName}`);
 };
 
-export const imageFileFilter = (_, file, callback) => {
+export const fileFilter = (_, file, callback) => {
   if (!file.originalname.match(/\.(pdf)$/)) {
     return callback(
       new HttpException(
@@ -46,7 +46,7 @@ export class UploadFileController {
         destination: join(process.cwd(), `${environment.assetPath}`),
         filename: editFileName,
       }),
-      fileFilter: imageFileFilter,
+      fileFilter: fileFilter,
     })
   )
   @Post('file')

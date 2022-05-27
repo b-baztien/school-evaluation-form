@@ -12,9 +12,7 @@
         let tableIndex = index
       "
     >
-      <table
-        [ngClass]="{ 'new-page': tableIndex > 0 || listTableBodyIndex > 0 }"
-      >
+      <table #table class="new-page">
         <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
         <ng-container *ngTemplateOutlet="tableHeaderMessage"></ng-container>
         <ng-container
@@ -122,6 +120,32 @@
                     "
                   />
                   <h4 class="inline">ดีมาก</h4>
+                </td>
+              </tr>
+              <tr
+                *ngIf="
+                  tableIndex === splitTable(listTableBody).length - 1 &&
+                  i === tableBody.tableInside.length - 1
+                "
+                class="end-tr-sum"
+              >
+                <td colspan="2">
+                  <h4 class="inline">
+                    คะแนนเฉลี่ย {{ tableIndex + 1 }} องค์ประกอบ ของรายด้านที่
+                    {{ listTableBodyIndex + 1 }}
+                    (นำคะแนนเฉลี่ยทุกองค์ประกอบด้าน{{
+                      listTableBodyIndex + 1
+                    }}
+                    ÷ {{ tableIndex + 1 }})
+                  </h4>
+                </td>
+                <td colspan="6">
+                  <h4 class="text-center">
+                    {{
+                      sumTotalAvarageScore(splitTable(listTableBody))
+                        | actualDigitNumber
+                    }}
+                  </h4>
                 </td>
               </tr>
             </ng-container>

@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  TuiLegendItemModule,
+  TuiRingChartModule,
+} from '@taiga-ui/addon-charts';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 import { TuiTableModule } from '@taiga-ui/addon-table';
 import {
   TuiDestroyService,
@@ -50,15 +55,10 @@ import {
   TuiTextAreaModule,
 } from '@taiga-ui/kit';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { TuiPreviewModule } from '@taiga-ui/addon-preview';
-import {
-  TuiLegendItemModule,
-  TuiRingChartModule,
-} from '@taiga-ui/addon-charts';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { InputNumberDirective } from '../../directives/input-number/input-number.directive';
 import { ToNativeDateDirective } from '../../directives/to-native-date.directive';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import { ActualDigitNumberPipe } from '../../pipe/actual-digit-number.pipe';
 @NgModule({
   declarations: [
