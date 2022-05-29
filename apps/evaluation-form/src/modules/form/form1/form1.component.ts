@@ -4,6 +4,8 @@ import { FormStaff, UserForm } from '@school-evaluation-form/api-interfaces';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
+import { CustomValidator } from 'apps/evaluation-form/src/utils/validatates/form-validatate';
+import { Feedback } from 'libs/api-interfaces/src/lib/feedback';
 import { EMPTY, first, switchMap, takeUntil, tap } from 'rxjs';
 import { combineLatestInit } from 'rxjs/internal/observable/combineLatest';
 
@@ -519,12 +521,7 @@ export class Form1Component {
                             (tablePerformance) =>
                               new FormGroup({
                                 topic: new FormControl(tablePerformance.topic),
-                                selectOption: new FormControl(
-                                  // tablePerformance.selectOption
-
-                                  //TODO remove this
-                                  this.operationType[1]
-                                ),
+                                selectOption: new FormControl(null),
                               })
                           )
                         ),
@@ -541,6 +538,14 @@ export class Form1Component {
       })
   );
 
+  formGroups2 = new FormGroup({
+    budgetYear: new FormControl('', [
+      CustomValidator.required({ text: 'ปีงบประมาณ' }),
+    ]),
+    prosFeedback: new FormControl(''),
+    consFeedback: new FormControl(''),
+  });
+
   userForm!: Partial<UserForm>;
 
   constructor(
@@ -550,6 +555,7 @@ export class Form1Component {
   ) {
     this.rootStoreService.formUser$.pipe(first()).subscribe((formUser) => {
       this.userForm = { ...formUser };
+      formUser.feedback && this.formGroups2.patchValue(formUser.feedback);
     });
   }
 
@@ -581,7 +587,11 @@ export class Form1Component {
       formStaff[i] = { ...formStaffGroup };
     }
 
+    this.formGroups2.markAllAsTouched();
+    if (this.formGroups2.invalid) return;
+
     this.userForm.formStaff = [...formStaff];
+    this.userForm.feedback = this.formGroups2.getRawValue() as Feedback;
 
     this.rootStoreService.submitForm({ ...this.userForm });
 

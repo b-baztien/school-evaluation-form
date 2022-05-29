@@ -10,6 +10,7 @@ import {
   TUI_SANITIZER,
 } from '@taiga-ui/core';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { FormService } from '../services/form/form.service';
 import {
   AppState,
   formUserReducer,
@@ -37,7 +38,10 @@ import { AppComponent } from './app.component';
     TuiNotificationsModule,
   ],
   exports: [AppRoutingModule],
-  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
+  providers: [
+    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+    FormService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

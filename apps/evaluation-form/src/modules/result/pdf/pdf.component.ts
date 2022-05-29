@@ -19,7 +19,7 @@ import buddhistEra from 'dayjs/plugin/buddhistEra';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class PdfComponent implements AfterViewInit {
-  userForm: Partial<UserForm>;
+  userForm!: Partial<UserForm>;
   user!: User;
 
   constructor() {
@@ -27,16 +27,18 @@ export class PdfComponent implements AfterViewInit {
     document.querySelector('footer')!.style.display = 'none';
 
     this.user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
+  }
 
+  ngOnInit(): void {
     this.userForm = JSON.parse(
       localStorage.getItem('userForm')!.toString()
     ) as Partial<UserForm>;
   }
 
   ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   window.print();
-    // }, 1000);
+    setTimeout(() => {
+      window.print();
+    }, 1000);
   }
 
   removeParentheses(message: string) {

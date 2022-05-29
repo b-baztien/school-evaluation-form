@@ -60,7 +60,7 @@ export class TableComponent implements OnInit {
             0
           );
 
-          if (tableLength > 10) {
+          if (tableLength > 9) {
             for (const item of tableInsideSlice) {
               tableInside.push([JSON.parse(JSON.stringify(item))]);
             }

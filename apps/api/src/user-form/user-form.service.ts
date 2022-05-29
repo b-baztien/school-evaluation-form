@@ -51,10 +51,9 @@ export class UserFormService {
       }
     }
 
-    console.log('userForm', userForm.formStaff[0].tableBody[0].totalScore);
-
     const dataForAdd = {
       ...userForm,
+      updateDate: new Date(),
       user_Id: user._id,
     } as UserForm;
 
@@ -63,5 +62,22 @@ export class UserFormService {
 
   findAll() {
     return this.userFormRepository.find();
+  }
+
+  async findLastest(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { username: userId },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return this.userFormRepository.findOne({
+      where: { user_Id: user._id },
+      order: {
+        updateDate: 'DESC',
+      },
+    });
   }
 }

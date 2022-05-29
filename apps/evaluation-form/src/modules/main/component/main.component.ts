@@ -1,5 +1,6 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@school-evaluation-form/api-interfaces';
 import {
   TuiDialogContext,
   TuiDialogService,
@@ -23,11 +24,18 @@ export class MainComponent implements OnDestroy {
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private rootStoreService: RootStoreService,
+    private formService: FormService,
     private router: Router
   ) {
-    const { role } = JSON.parse(sessionStorage.getItem('user') ?? '');
-    console.log(sessionStorage.getItem('user'));
-    this.role = role;
+    const user = JSON.parse(sessionStorage.getItem('user') ?? '') as User;
+    this.role = user.role;
+
+    this.formService
+      .getLastestUserForm(user.username)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((form) => {
+        this.rootStoreService.submitForm(form);
+      });
   }
 
   ngOnDestroy(): void {

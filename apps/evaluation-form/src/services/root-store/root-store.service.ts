@@ -24,23 +24,22 @@ export class RootStoreService {
   isFirstStep = new BehaviorSubject<boolean>(false);
 
   constructor(private store: Store<AppState>) {
-    //TODO remove this
     const formUser: UserForm = {
-      schoolName: 'แม่แป้นวิทยา',
-      group: 'ขุนงาว',
-      address: 'ที่อยู่',
-      district: 'อำเภอ',
-      province: 'ลำปาง',
-      managerName: 'ชื่อผู้อำนวยการ',
-      startPostionYear: '2565',
-      managerPhone: '0812345678',
-      fullname: 'ชื่อผู้รับผิดชอบ',
-      startYear: '2565',
-      phone: '0812345678',
-      time: '1',
+      schoolName: '',
+      group: '',
+      address: '',
+      district: '',
+      province: '',
+      managerName: '',
+      startPostionYear: '',
+      managerPhone: '',
+      fullname: '',
+      startYear: '',
+      phone: '',
+      time: '',
       date: new Date(),
       fileName: '',
-      username: '001',
+      username: '',
     };
 
     this.submitForm(formUser);
@@ -80,6 +79,7 @@ export class RootStoreService {
   }
 
   submitForm(form: Partial<UserForm>) {
+    localStorage.setItem('userForm', JSON.stringify(form));
     this.store.dispatch(submitForm(form));
   }
 

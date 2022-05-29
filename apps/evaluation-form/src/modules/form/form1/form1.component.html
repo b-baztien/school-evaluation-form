@@ -1,9 +1,9 @@
 <div
-  class="tui-row tui-row_adaptive"
+  class="tui-row tui-row_adaptive tui-space_bottom-5"
   *ngFor="let data of dataTable; let i = index"
 >
   <div class="tui-col_lg-12">
-    <h3>{{ data.tableHeader }}</h3>
+    <h5>{{ data.tableHeader }}</h5>
   </div>
   <div
     class="tui-col_lg-12"
@@ -93,6 +93,51 @@
           </tbody>
         </ng-container>
       </table>
+    </form>
+  </div>
+</div>
+<div class="tui-row tui-row_adaptive">
+  <div class="tui-col_lg-12">
+    <form [formGroup]="formGroups2">
+      <div class="text-center">
+        <h5>
+          สรุปผลการตรวจสอบภาพรวมขับเคลื่อนปรัชญาของเศรษฐกิจพอเพียงสู่สถานศึกษา
+        </h5>
+        <tui-input
+          formControlName="budgetYear"
+          schoolEvaluationFormInputNumber
+          class="tui-group__inherit-item tui-space_top-5"
+        >
+          ปีงบประมาณ
+          <span class="tui-required"></span>
+        </tui-input>
+        <tui-field-error
+          class="tui-space_bottom-5"
+          formControlName="budgetYear"
+        ></tui-field-error>
+        <h5>สำนักงานเขตพื้นที่การศึกษาประถมศึกษาลำปาง เขต 1</h5>
+      </div>
+      <p>
+        สรุปผลการตรวจสอบขับเคลื่อนปรัชญาของเศรษฐกิจพอเพียงสู่สถานศึกษา จุดเด่น
+        จุดที่ต้องเพิ่มและพัฒนา
+      </p>
+      <tui-text-area
+        class="tui-space_vertical-5"
+        [expandable]="true"
+        [tuiTextfieldMaxLength]="500"
+        [tuiTextfieldLabelOutside]="true"
+        formControlName="prosFeedback"
+        maxlength="500"
+        >จุดเด่นการขับเคลื่อนปรัชญาของเศรษฐกิจพอเพียงสู่สถานศึกษา
+      </tui-text-area>
+      <tui-text-area
+        [expandable]="true"
+        [tuiTextfieldMaxLength]="500"
+        [tuiTextfieldLabelOutside]="true"
+        formControlName="consFeedback"
+        maxlength="500"
+        >จุดที่ต้องเพิ่มและพัฒนา
+      </tui-text-area>
     </form>
   </div>
 </div>

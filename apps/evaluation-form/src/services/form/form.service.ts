@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserForm } from '@school-evaluation-form/api-interfaces';
 import { map, Subject } from 'rxjs';
@@ -20,6 +20,18 @@ export class FormService {
     return this.http.post<string>(
       `${environment.apiEndPoint}/upload-file/file`,
       formData
+    );
+  }
+
+  getLastestUserForm(userId: string) {
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+
+    return this.http.get<Partial<UserForm>>(
+      `${environment.apiEndPoint}/user-form/get-lastest`,
+      {
+        params,
+      }
     );
   }
 

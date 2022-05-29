@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User, UserForm } from '@school-evaluation-form/api-interfaces';
 import { TuiDestroyService } from '@taiga-ui/cdk';
@@ -13,7 +18,7 @@ import { CustomValidator } from '../../../utils/validatates/form-validatate';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
   forms: ConfigurationForm<UserForm> = {
     schoolName: new FormControl(
       '',
@@ -66,14 +71,20 @@ export class UserFormComponent {
     private rootStoreService: RootStoreService,
     private formService: FormService,
     private destroy$: TuiDestroyService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     const { role } = JSON.parse(sessionStorage.getItem('user') ?? '{}') as User;
     this.role = role;
 
     this.rootStoreService.formUser$
       .pipe(
-        first(),
-        tap({ next: (formUser) => (this.formUser = { ...formUser }) }),
+        tap({
+          next: (formUser) => {
+            this.formUser = { ...formUser, province: 'ลำปาง' };
+            this.formGroup.patchValue(this.formUser);
+          },
+        }),
         takeUntil(this.destroy$)
       )
       .subscribe();
@@ -83,20 +94,17 @@ export class UserFormComponent {
         first(),
         tap({
           next: () => this.onSubmit(),
-          complete: () => console.log('complete'),
         }),
         takeUntil(this.destroy$)
       )
       .subscribe();
-
-    this.formGroup.patchValue(this.formUser);
   }
 
   onSubmit() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.invalid) return;
 
-    const formUser = this.formGroup.getRawValue() as UserForm;
+    const formUser = this.formGroup.value as UserForm;
 
     this.rootStoreService.submitForm(formUser);
     this.rootStoreService.nextStep();

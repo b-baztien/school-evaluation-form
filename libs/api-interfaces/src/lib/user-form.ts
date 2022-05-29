@@ -1,3 +1,4 @@
+import { Feedback } from './feedback';
 import { FormStaff } from './form-staff';
 import { FormTeacher } from './form-teacher';
 
@@ -16,7 +17,9 @@ export interface UserForm {
   time: string;
   date: Date;
   formStaff?: FormStaff[];
+  feedback?: Feedback;
   formTeacher?: FormTeacher[];
   fileName: string;
   username: string;
+  updateDate?: Date;
 }

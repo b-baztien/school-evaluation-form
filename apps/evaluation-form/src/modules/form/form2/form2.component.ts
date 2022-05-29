@@ -135,17 +135,6 @@ export class Form2Component {
         this.userForm = { ...formUser };
       });
 
-    //TODO remove this
-    for (const item of this.formGroups) {
-      const form1 = item.controls['tableBody'] as any;
-      for (const item2 of form1.controls as FormArray[]) {
-        const form2 = item2.controls;
-        for (const item3 of form2) {
-          (item3 as FormControl).setValue(this.operationType[0]);
-        }
-      }
-    }
-
     this.rootStoreService.stepper$.pipe(
       switchMap((stepper) => {
         if (stepper.stepIndex === 1) {
