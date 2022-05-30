@@ -20,13 +20,10 @@ import buddhistEra from 'dayjs/plugin/buddhistEra';
 })
 export class PdfComponent implements AfterViewInit {
   userForm!: Partial<UserForm>;
-  user!: User;
 
   constructor() {
     document.querySelector('nav')!.style.display = 'none';
     document.querySelector('footer')!.style.display = 'none';
-
-    this.user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
   }
 
   ngOnInit(): void {
@@ -36,9 +33,9 @@ export class PdfComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      window.print();
-    }, 1000);
+    // setTimeout(() => {
+    //   window.print();
+    // }, 1000);
   }
 
   removeParentheses(message: string) {

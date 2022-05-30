@@ -1,3 +1,8 @@
 :host ::ng-deep button.expand > span.name {
   left: 15rem !important;
 }
+
+:host ::ng-deep tui-tag {
+  background-color: var(--tui-primary);
+  color: #fff;
+}

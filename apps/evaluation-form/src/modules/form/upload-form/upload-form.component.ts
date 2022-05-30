@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, UserForm } from '@school-evaluation-form/api-interfaces';
+import { UserForm } from '@school-evaluation-form/api-interfaces';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
@@ -8,14 +8,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import {
   BehaviorSubject,
-  combineLatest,
   finalize,
   first,
   fromEvent,
   map,
-  NEVER,
-  of,
-  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -33,7 +29,6 @@ export class UploadFormComponent implements OnInit {
   uploadFileTxt = new BehaviorSubject<string>('');
   uploadFile = new BehaviorSubject<File | undefined>(undefined);
 
-  user!: User;
   userForm!: Partial<UserForm>;
 
   constructor(
@@ -44,8 +39,6 @@ export class UploadFormComponent implements OnInit {
     private destroy$: TuiDestroyService,
     private spinner: NgxSpinnerService
   ) {
-    this.user = JSON.parse(sessionStorage.getItem('user')!) as User;
-
     this.rootStoreService.formUser$
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((data) => {
@@ -111,7 +104,7 @@ export class UploadFormComponent implements OnInit {
           this.userForm = {
             ...this.userForm,
             fileName,
-            username: this.user.username,
+            // username: this.user.username,
           };
 
           return this.formService.addUserForm(this.userForm).pipe(

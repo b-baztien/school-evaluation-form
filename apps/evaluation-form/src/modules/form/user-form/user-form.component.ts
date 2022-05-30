@@ -65,7 +65,7 @@ export class UserFormComponent implements OnInit {
   formGroup = new FormGroup(this.forms);
   formUser!: Partial<UserForm>;
 
-  role!: string;
+  formId!: string;
 
   constructor(
     private rootStoreService: RootStoreService,
@@ -74,8 +74,7 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const { role } = JSON.parse(sessionStorage.getItem('user') ?? '{}') as User;
-    this.role = role;
+    this.formId = localStorage.getItem('formId') ?? '';
 
     this.rootStoreService.formUser$
       .pipe(
@@ -102,7 +101,7 @@ export class UserFormComponent implements OnInit {
 
   onSubmit() {
     this.formGroup.markAllAsTouched();
-    if (this.formGroup.invalid) return;
+    // if (this.formGroup.invalid) return;
 
     const formUser = this.formGroup.value as UserForm;
 

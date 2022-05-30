@@ -10,7 +10,7 @@ export interface AppState {
 
 export const initialState: Stepper = {
   stepIndex: 0,
-  listFormStep: ['ข้อมูลผู้ทำแบบประเมิน', 'กรอกแบบประเมิน', 'อัพโหลดไฟล์'],
+  listFormStep: ['ข้อมูลผู้ทำแบบประเมิน', 'กรอกแบบประเมิน'],
 };
 
 export const stepperReducer = createReducer<Stepper>(

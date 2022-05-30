@@ -17,25 +17,15 @@ import { Subject, takeUntil, tap } from 'rxjs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnDestroy {
-  role!: string;
-
   destroy$ = new Subject<void>();
+  formId!: string;
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private rootStoreService: RootStoreService,
-    private formService: FormService,
     private router: Router
   ) {
-    const user = JSON.parse(sessionStorage.getItem('user') ?? '') as User;
-    this.role = user.role;
-
-    this.formService
-      .getLastestUserForm(user.username)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((form) => {
-        this.rootStoreService.submitForm(form);
-      });
+    this.formId = localStorage.getItem('formId') ?? '';
   }
 
   ngOnDestroy(): void {

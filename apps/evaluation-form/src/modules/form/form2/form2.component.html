@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div
   class="tui-row tui-row_adaptive"
   *ngFor="let data of dataTable; let i = index"
@@ -21,6 +23,28 @@
             [data]="tableBody.header"
           >
             <tr *tuiRow="let item of tableBody.header; let k = index" tuiTr>
+              <td *tuiCell="'topic'" tuiTd>
+                <ng-container
+                  *ngFor="
+                    let topic of splitInput(item.topic);
+                    let splitIndex = index
+                  "
+                >
+                  {{ topic }}
+                  <input
+                    style="
+                      width: 50px;
+                      border-radius: var(--tui-radius-m);
+                      color: var(--tui-text-01);
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    type="text"
+                    schoolEvaluationFormInputNumber
+                    *ngIf="item.inputData !== undefined"
+                    [(ngModel)]="item.inputData[splitIndex]"
+                  />
+                </ng-container>
+              </td>
               <td *tuiCell="'operation'" tuiTd>
                 <tui-select
                   class="select"
@@ -50,19 +74,34 @@
       <h3>หลักฐาน/ร่องรอย</h3>
     </div>
     <div class="tui-col_lg-12">
-      <tui-multi-select
-        formControlName="evidence"
-        [editable]="false"
-        [tuiTextfieldLabelOutside]="true"
-        [tuiTextfieldCleaner]="true"
-      >
-        เลือกหลักฐาน/ร่องรอย
-        <tui-data-list-wrapper
-          *tuiDataList
-          tuiMultiSelectGroup
-          [items]="data.evidence"
-        ></tui-data-list-wrapper>
-      </tui-multi-select>
+      <ng-container
+        *ngIf="isString(data.evidence); then thenTemplate; else elseTemplate"
+      ></ng-container>
+      <ng-template #thenTemplate>
+        <tui-text-area
+          [expandable]="true"
+          [tuiTextfieldMaxLength]="500"
+          [tuiTextfieldLabelOutside]="true"
+          formControlName="evidence"
+          maxlength="500"
+          >ระบุหลักฐาน/ร่องรอย
+        </tui-text-area>
+      </ng-template>
+      <ng-template #elseTemplate>
+        <tui-multi-select
+          formControlName="evidence"
+          [editable]="false"
+          [tuiTextfieldLabelOutside]="true"
+          [tuiTextfieldCleaner]="true"
+        >
+          เลือกหลักฐาน/ร่องรอย
+          <tui-data-list-wrapper
+            *tuiDataList
+            tuiMultiSelectGroup
+            [items]="$any(data.evidence)"
+          ></tui-data-list-wrapper>
+        </tui-multi-select>
+      </ng-template>
     </div>
     <div class="tui-col_lg-12">
       <h3>ข้อสังเกต/ข้อเสนอแนะ</h3>

@@ -4,10 +4,12 @@ export interface FormTeacher {
     tbodyHeading: string;
     header: {
       topic: string;
+      inputData?: Array<string>;
       selectedOperation?: string;
     }[];
   }[];
-  evidence: string[];
+  evidence: string[] | string;
+  otherEvidence?: string;
   selectedEvidence?: string[];
   feedback?: string;
 }
