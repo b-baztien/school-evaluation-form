@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormStaff, UserForm } from '@school-evaluation-form/api-interfaces';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { FormService } from 'apps/evaluation-form/src/services/form/form.service';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
 import { CustomValidator } from 'apps/evaluation-form/src/utils/validatates/form-validatate';
 import { Feedback } from 'libs/api-interfaces/src/lib/feedback';
-import { EMPTY, first, switchMap, takeUntil, tap } from 'rxjs';
-import { combineLatestInit } from 'rxjs/internal/observable/combineLatest';
+import { MessageService } from 'primeng/api';
+import { first, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'school-evaluation-form-form1',
@@ -551,6 +552,8 @@ export class Form1Component {
   constructor(
     private formService: FormService,
     private rootStoreService: RootStoreService,
+    private messageService: MessageService,
+    private router: Router,
     private destroy$: TuiDestroyService
   ) {
     this.rootStoreService.formUser$.pipe(first()).subscribe((formUser) => {
@@ -560,18 +563,8 @@ export class Form1Component {
   }
 
   ngOnInit(): void {
-    this.rootStoreService.stepper$
-      .pipe(
-        switchMap((stepper) => {
-          if (stepper.stepIndex === 1) {
-            return this.formService.getSubmitSubject.pipe(
-              tap({ next: () => this.onSubmit() }),
-              takeUntil(this.destroy$)
-            );
-          }
-          return EMPTY;
-        })
-      )
+    this.formService.getSubmitSubject
+      .pipe(tap({ next: () => this.onSubmit() }), takeUntil(this.destroy$))
       .subscribe();
   }
 
@@ -580,7 +573,16 @@ export class Form1Component {
     for (const i in this.formGroups) {
       this.formGroups[i].markAllAsTouched();
 
-      if (this.formGroups[i].invalid) return;
+      if (this.formGroups[i].invalid) {
+        this.messageService.clear();
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'ผิดพลาด',
+          detail: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+        });
+        return;
+      }
 
       const formStaffGroup = this.formGroups[i].getRawValue() as FormStaff;
 
@@ -588,13 +590,49 @@ export class Form1Component {
     }
 
     this.formGroups2.markAllAsTouched();
-    if (this.formGroups2.invalid) return;
+    if (this.formGroups2.invalid) {
+      this.messageService.clear();
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ผิดพลาด',
+        detail: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+      });
+      return;
+    }
+
+    this.calculateScore(formStaff);
 
     this.userForm.formStaff = [...formStaff];
+
     this.userForm.feedback = this.formGroups2.getRawValue() as Feedback;
 
     this.rootStoreService.submitForm({ ...this.userForm });
 
-    this.rootStoreService.nextStep();
+    this.router.navigate(['/result']);
+  }
+
+  calculateScore(listFormStaff: FormStaff[]) {
+    for (const formStaff of listFormStaff) {
+      for (const tableBody of formStaff.tableBody) {
+        for (const tableInside of tableBody.tableInside) {
+          tableInside.totalScore = tableBody.tableInside.reduce((acc, _) => {
+            return acc + 4;
+          }, 0);
+
+          tableInside.score = tableInside.tablePerformance
+            .map((item) => {
+              return this.operationType.indexOf(item.selectOption!) + 1;
+            })
+            .reduce((acc, curr) => {
+              return acc + curr;
+            }, 0);
+        }
+
+        tableBody.totalScore = tableBody.tableInside.reduce((acc, curr) => {
+          return acc + curr.score!;
+        }, 0);
+      }
+    }
   }
 }

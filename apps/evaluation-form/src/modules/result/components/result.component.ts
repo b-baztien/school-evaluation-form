@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserForm } from '@school-evaluation-form/api-interfaces';
 import { sum, TuiDestroyService } from '@taiga-ui/cdk';
 import { RootStoreService } from 'apps/evaluation-form/src/services/root-store/root-store.service';
@@ -21,34 +21,27 @@ interface ResultChart {
 export class ResultComponent {
   listResultChart: ResultChart[] = [];
 
-  userForm!: Partial<UserForm>;
+  constructor() {
+    const userForm = JSON.parse(
+      localStorage.getItem('userForm')!.toString()
+    ) as Partial<UserForm>;
 
-  constructor(
-    private rootStoreService: RootStoreService,
-    private destroy$: TuiDestroyService
-  ) {
-    this.rootStoreService.formUser$
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.userForm = data;
+    for (const tableBody of userForm.formStaff?.[0].tableBody ?? []) {
+      let resultChart: ResultChart = {
+        header: tableBody.tableMainHeading as string,
+        listResultChart: [],
+        totalScore: tableBody.totalScore!,
+      };
 
-        for (const tableBody of this.userForm.formStaff?.[0].tableBody ?? []) {
-          let resultChart: ResultChart = {
-            header: tableBody.tableMainHeading as string,
-            listResultChart: [],
-            totalScore: tableBody.totalScore!,
-          };
-
-          resultChart.listResultChart = tableBody.tableInside.map((item) => {
-            return {
-              title: item.tableHeading ?? '',
-              value: [item.score!, item.totalScore!],
-            };
-          });
-
-          this.listResultChart = [...this.listResultChart, resultChart];
-        }
+      resultChart.listResultChart = tableBody.tableInside.map((item) => {
+        return {
+          title: item.tableHeading ?? '',
+          value: [item.score!, item.totalScore!],
+        };
       });
+
+      this.listResultChart = [...this.listResultChart, resultChart];
+    }
   }
 
   show() {

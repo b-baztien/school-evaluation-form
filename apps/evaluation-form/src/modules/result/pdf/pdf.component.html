@@ -1,8 +1,4 @@
-<div
-  id="section-to-print"
-  style="width: 595px !important; height: 842px !important"
-  class="main-div"
->
+<div id="section-to-print" style="width: 595px !important" class="main-div">
   <img src="assets/images/logo.png" />
   <p class="header align-center header-border py">
     แบบประเมินผล การขับเคลื่อนหลักปรัชญาของเศรษฐกิจพอเพียงสู่สถานสถานศึกษา
@@ -27,7 +23,70 @@
     ที่อยู่
     .........................................................................อำเภอ.................................จังหวัดลำปาง
   </p>
+  <p class="header-absolute" style="margin-left: 210px; margin-top: -10px">
+    {{ userForm.managerName }}
+  </p>
+  <p class="header">
+    ชื่อ-สกุล ผู้บริหารสถานศึกษา
+    ...................................................................................................
+  </p>
+  <p class="header-absolute" style="margin-left: 180px; margin-top: -10px">
+    {{ userForm.startPostionYear }}
+  </p>
+  <p class="header-absolute" style="margin-left: 390px; margin-top: -10px">
+    {{ userForm.managerPhone }}
+  </p>
+  <p class="header">
+    ดำรงตำแหน่งตั้งแต่ปี................................เบอร์โทร...................................................................
+  </p>
+  <p class="header-absolute" style="margin-left: 210px; margin-top: -10px">
+    {{ userForm.fullname }}
+  </p>
+  <p class="header">
+    ชื่อ-สกุล {{ userForm.formTeacher && 'ครู' }}ที่รับผิดชอบ
+    ............................................................................................................
+  </p>
+  <p class="header-absolute" style="margin-left: 90px; margin-top: -10px">
+    {{ userForm.startYear }}
+  </p>
+  <p class="header-absolute" style="margin-left: 350px; margin-top: -10px">
+    {{ userForm.phone }}
+  </p>
+  <p class="header">
+    ตั้งแต่ปี......................................................เบอร์โทร...................................................................
+  </p>
   <h4 class="align-center">สำนักงานเขตพื้นที่การศึกษาประถมศึกษาลำปาง เขต 1</h4>
+  <div class="d-inline" *ngIf="userForm.formTeacher">
+    <h4>ครั้งที่นิเทศ ติดตาม</h4>
+    <input type="checkbox" [checked]="userForm.time === '1'" />
+    <p
+      *ngIf="userForm.time === '1'"
+      class="header-absolute"
+      style="margin-left: 160px; margin-top: -10px"
+    >
+      {{ userForm.date }}
+    </p>
+    <h4>
+      ครั้งที่ 1
+      วัน/เดือน/ปี...............................................................................
+    </h4>
+    <input
+      style="margin-left: 125px"
+      type="checkbox"
+      [checked]="userForm.time === '2'"
+    />
+    <p
+      *ngIf="userForm.time === '2'"
+      class="header-absolute"
+      style="margin-left: 160px; margin-top: -10px"
+    >
+      {{ userForm.date }}
+    </p>
+    <h4>
+      ครั้งที่ 2
+      วัน/เดือน/ปี...............................................................................
+    </h4>
+  </div>
   <hr style="margin: 16px 0" />
   <ng-container
     *ngIf="
@@ -39,8 +98,13 @@
   <br class="remove-from-print" />
   <div class="new-page">
     <school-evaluation-form-table
+      *ngIf="userForm.formStaff"
       [userForm]="userForm"
     ></school-evaluation-form-table>
+    <school-evaluation-form-table-teacher
+      *ngIf="userForm.formTeacher"
+      [userForm]="userForm"
+    ></school-evaluation-form-table-teacher>
     <div class="new-page">
       <h4>ข้อคิดเห็นหรือข้อเสนอแนะอื่นๆ</h4>
       <p class="header-absolute-paragraph" style="margin-top: -10px">

@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit {
 
   onSubmit() {
     this.formGroup.markAllAsTouched();
-    // if (this.formGroup.invalid) return;
+    if (this.formGroup.invalid) return;
 
     const formUser = this.formGroup.value as UserForm;
 
