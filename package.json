@@ -10,7 +10,7 @@
     "build:all": "nx run-many --target=build --all --parallel --maxParallel=7",
     "start:front:prod": "cd ./dist/apps/evaluation-form && http-server",
     "start:back:prod": "node ./dist/apps/api/main.js",
-    "build:firebase:deploy": "nx build evaluation-form && firebase deploy",
+    "deploy:github-action": "nx build evaluation-form --prod --base-href /school-evaluation-form/ --output-path docs",
     "build": "nx build",
     "test": "nx test"
   },
